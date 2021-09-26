@@ -1,11 +1,13 @@
-const getRandomIntFromRange = function (min, max) { //Функция, возвращающая случайное целое число из переданного диапазона включительно.
-  return (min < max) ? Math.round(Math.random() * (max - min) + min) : 'Введите корректные данные';
+const getRandomIntFromRange = function (min, max) {
+  return (min < max) ? Math.round(Math.random() * (max - min) + min) : false;
 };
 
 getRandomIntFromRange(0, 10);
 
-const coordinates = function (from, to, point) { //Функция, возвращающая случайное число с плавающей точкой из переданного диапазона включительно.
-  return (from < to) ? (Math.random() * (to - from) + from).toFixed(point) : 'Введите корректные данные'; //Использовались материалы https://learn.javascript.ru/number
+const coordinates = function (from, to, point) {
+  return (from < to) ? parseFloat((Math.random() * (to - from) + from).toFixed(point)) :  parseFloat((Math.random() * (from - to) + to).toFixed(point));
 };
 
 coordinates(100, 200, 2);
+
+//Использовались материалы https://learn.javascript.ru/number
