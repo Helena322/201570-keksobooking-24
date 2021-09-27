@@ -1,9 +1,9 @@
-const swap = function (x, y) {
-  return x > y ? [y, x] : [x, y];
-}
+const swap = function (min, max) {
+  return min > max ? [max, min] : [min, max];
+};
 
-const arrWithNumbers = function (x, y) {
-  const [min, max] = swap (x, y);
+const arrWithNumbers = function (from, to) {
+  const [min, max] = swap (from, to);
   return Math.random() * (max - min) + min;
 };
 
