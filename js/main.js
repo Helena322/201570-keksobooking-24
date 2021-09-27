@@ -1,4 +1,4 @@
-const getRandomFloatRange = function (from, to, point) {
+const getRandomFloatRange = function (from, to, point = 0) {
   const min = Math.min(from, to);
   const max = Math.max(from, to);
   return parseFloat((Math.random() * (max - min) + min).toFixed(point));
