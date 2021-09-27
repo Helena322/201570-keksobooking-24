@@ -1,12 +1,12 @@
+const coordinates = function (from, to, point) {
+  return (from < to) ? parseFloat((Math.random() * (to - from) + from).toFixed(point)) : parseFloat((Math.random() * (from - to) + to).toFixed(point));
+};
+
 const getRandomIntFromRange = function (min, max) {
-  return (min < max) ? Math.round(Math.random() * (max - min) + min) : false;
+  return Math.round(coordinates(min, max));
 };
 
 getRandomIntFromRange(0, 10);
-
-const coordinates = function (from, to, point) {
-  return (from < to) ? parseFloat((Math.random() * (to - from) + from).toFixed(point)) :  parseFloat((Math.random() * (from - to) + to).toFixed(point));
-};
 
 coordinates(100, 200, 2);
 
