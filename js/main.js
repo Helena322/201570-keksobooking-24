@@ -1,5 +1,14 @@
+const swap = function (x, y) {
+  return x > y ? [y, x] : [x, y];
+}
+
+const arrWithNumbers = function (x, y) {
+  const [min, max] = swap (x, y);
+  return Math.random() * (max - min) + min;
+};
+
 const coordinates = function (from, to, point) {
-  return (from < to) ? parseFloat((Math.random() * (to - from) + from).toFixed(point)) : parseFloat((Math.random() * (from - to) + to).toFixed(point));
+  return (from < to) ? parseFloat((Math.random() * (to - from) + from).toFixed(point)) : parseFloat(arrWithNumbers(from, to).toFixed(point));
 };
 
 const getRandomIntFromRange = function (min, max) {
