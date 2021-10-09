@@ -1,4 +1,3 @@
-//Использовались материалы https://learn.javascript.ru/number
 import {SIMILAR_OFFERS_COUNT} from './data.js';
 import {getOffers} from'./util.js';
 

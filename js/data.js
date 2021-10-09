@@ -39,7 +39,7 @@ export const FEATURES = [
   'conditioner',
 ];
 
-export const DESCRIPTIONS = [
+export const DESCRIPTION = [
   'Отличная квартира',
   'Великолепный вид',
   'Со всеми удобствами',
