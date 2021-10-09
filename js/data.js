@@ -39,7 +39,7 @@ export const FEATURES = [
   'conditioner',
 ];
 
-export const DESCRIPTION = [
+export const DESCRIPTIONS = [
   'Отличная квартира',
   'Великолепный вид',
   'Со всеми удобствами',
@@ -51,4 +51,4 @@ export const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
 
-export const SIMILAR_OFFER_COUNT = 10;
+export const SIMILAR_OFFERS_COUNT = 10;

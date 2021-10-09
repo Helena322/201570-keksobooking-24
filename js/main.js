@@ -1,5 +1,6 @@
 //Использовались материалы https://learn.javascript.ru/number
-import './data.js';
-import {similarOffer} from'./util.js';
+import {SIMILAR_OFFERS_COUNT} from './data.js';
+import {getOffers} from'./util.js';
 
-similarOffer;
+const similarOffers = Array.from({length: SIMILAR_OFFERS_COUNT}, getOffers);
+similarOffers;

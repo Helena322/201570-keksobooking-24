@@ -1,12 +1,4 @@
-import {AUTOR} from './data.js';
-import {TITLE} from './data.js';
-import {TYPE} from './data.js';
-import {CHECKIN} from './data.js';
-import {CHECKOUT} from './data.js';
-import {FEATURES} from './data.js';
-import {DESCRIPTION} from './data.js';
-import {PHOTOS} from './data.js';
-import {SIMILAR_OFFER_COUNT} from './data.js';
+import {AUTOR, TITLE, TYPE, CHECKIN, CHECKOUT, FEATURES, DESCRIPTION, PHOTOS} from './data.js';
 
 export const getRandomFloatRange = ((from, to, point = 0) => {
   const min = Math.min(from, to);
@@ -72,14 +64,10 @@ export const getRandomAvatarNumber = () => {
   return (getAvatarNumber < 10) ? avatarNumberZero + getAvatarNumber + avatarFormat : avatarNumberWithoutZero + getAvatarNumber + avatarFormat;
 };
 
-export const getOffer = (() => (
+export const getOffers = (() => (
   {
     autor: [getRandomArrayElement(AUTOR), getRandomAvatarNumber()],
     offer: [getRandomArrayElement(TITLE), getRandomAdress(), getRandomPrice(), getRandomArrayElement(TYPE), getRandomRooms(), getRandomGiests(), getRandomArrayElement(CHECKIN), getRandomArrayElement(CHECKOUT), getOfferDescription(FEATURES), getRandomArrayElement(DESCRIPTION), getRandomArrayElement(PHOTOS)],
     location: [getRandomAdress()],
   }
 ));
-
-export const similarOffer = Array.from({length: SIMILAR_OFFER_COUNT}, getOffer);
-
-similarOffer;
