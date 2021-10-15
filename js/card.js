@@ -86,4 +86,4 @@ export const getOffer = (call) => {
   canvas.appendChild(card);
 };
 
-getOffer(getOffers())
+getOffer(getOffers());
