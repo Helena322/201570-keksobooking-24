@@ -26,18 +26,19 @@ export const getRandomAdress = (() => (
   [getRandomLat(), getRandomLng()]
 ));
 
-export const getRandomPrice = (() => (
-  getRandomIntFromRange(1000, 6000)
-));
+export const getRandomPrice = (() => {
+  const night = ' ₽/ночь';
+  getRandomIntFromRange(1000, 6000) + night;
+});
 
 export const getRandomRooms = (() => {
-  const room = 'Комнат: ';
-  return room + getRandomIntFromRange(1, 10);
+  const room = ' комнаты';
+  return getRandomIntFromRange(1, 10) + room;
 });
 
 export const getRandomGiests = (() => {
-  const giest = 'Гостей: ';
-  return giest + getRandomIntFromRange(1, 10);
+  const giest = ' гостей';
+  return getRandomIntFromRange(1, 10) + giest;
 });
 
 export const getOfferDescription = ((elements) => {
@@ -58,16 +59,33 @@ export const getOfferDescription = ((elements) => {
 
 export const getRandomAvatarNumber = () => {
   const getAvatarNumber = getRandomIntFromRange(1, 10);
-  const avatarNumberZero = 'img/avatars/user0';
-  const avatarNumberWithoutZero = 'img/avatars/user';
+  const avatarLink = 'img/avatars/user';
   const avatarFormat = '.png';
-  return (getAvatarNumber < 10) ? avatarNumberZero + getAvatarNumber + avatarFormat : avatarNumberWithoutZero + getAvatarNumber + avatarFormat;
+  return (getAvatarNumber < 10) ? avatarLink.padEnd(17, '0') + getAvatarNumber + avatarFormat : avatarLink + getAvatarNumber + avatarFormat;
 };
+
+// export const getOffers = (() => (
+//   {
+//     autor: [getRandomArrayElement(AUTOR), getRandomAvatarNumber()],
+//     offer: [getRandomArrayElement(TITLE), getRandomAdress(), getRandomPrice(), getRandomArrayElement(TYPE), getRandomRooms(), getRandomGiests(), getRandomArrayElement(CHECKIN), getRandomArrayElement(CHECKOUT), getOfferDescription(FEATURES), getRandomArrayElement(DESCRIPTION), getRandomArrayElement(PHOTOS)],
+//     location: [getRandomAdress()],
+//   }
+// ));
 
 export const getOffers = (() => (
   {
-    autor: [getRandomArrayElement(AUTOR), getRandomAvatarNumber()],
-    offer: [getRandomArrayElement(TITLE), getRandomAdress(), getRandomPrice(), getRandomArrayElement(TYPE), getRandomRooms(), getRandomGiests(), getRandomArrayElement(CHECKIN), getRandomArrayElement(CHECKOUT), getOfferDescription(FEATURES), getRandomArrayElement(DESCRIPTION), getRandomArrayElement(PHOTOS)],
-    location: [getRandomAdress()],
+    autor: {name: getRandomArrayElement(AUTOR), avatar: getRandomAvatarNumber()},
+    offer: {title: getRandomArrayElement(TITLE),
+      adress: getRandomAdress(),
+      price: getRandomPrice(),
+      type: getRandomArrayElement(TYPE),
+      rooms: getRandomRooms(),
+      giests: getRandomGiests(),
+      checkin: getRandomArrayElement(CHECKIN),
+      checkout: getRandomArrayElement(CHECKOUT),
+      features: getOfferDescription(FEATURES),
+      description: getRandomArrayElement(DESCRIPTION),
+      photo: getRandomArrayElement(PHOTOS)},
+    location: {adress: getRandomAdress()},
   }
 ));
