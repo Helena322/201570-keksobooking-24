@@ -7,7 +7,7 @@ let mapFiltersElement = mapFilters.querySelector('select');
 const mapFiltersElements = mapFilters.querySelectorAll('select');
 const mapFiltersFieldset = mapFilters.querySelector('fieldset');
 
-export const getFormDisabled = () => {
+export const desableForm = () => {
   form.classList.add('ad-form--disabled');
   mapFilters.classList.add('map__filters--disabled');
 
@@ -22,7 +22,7 @@ export const getFormDisabled = () => {
   mapFiltersFieldset.classList.add('disabled');
 };
 
-export const getFormEnabled = () => {
+export const enableForm = () => {
   form.classList.remove('ad-form--disabled');
   mapFilters.classList.remove('map__filters--disabled');
 
@@ -37,5 +37,5 @@ export const getFormEnabled = () => {
   mapFiltersFieldset.classList.remove('disabled');
 };
 
-getFormDisabled();
-getFormEnabled();
+desableForm();
+enableForm();
