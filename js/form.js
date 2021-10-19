@@ -35,8 +35,8 @@ price.onchange = () => {
 };
 
 type.onchange = () => {
-    price.placeholder = PRICE_FOR_NIGHT[type.value];
-    price.min = PRICE_FOR_NIGHT[type.value];
+  price.placeholder = PRICE_FOR_NIGHT[type.value];
+  price.min = PRICE_FOR_NIGHT[type.value];
 };
 
 room.onchange = () => {
