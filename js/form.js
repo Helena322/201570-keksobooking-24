@@ -64,19 +64,19 @@ timein.addEventListener('change', () => {
   timeout.value = timein.value;
 });
 
-// form.addEventListener('submit', (event) => {
-//   event.preventDefault();
-//   if (room.value > capacity.value) {
-//     button.addEventListener("submit", (event) => {
-//       event.preventDefault();
-//       room.setCustomValidity('Комнат меньше, чем гостей.');
-//     });
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  if (room.value > capacity.value) {
+    button.addEventListener("submit", (event) => {
+      event.preventDefault();
+      room.setCustomValidity('Комнат меньше, чем гостей.');
+    });
 
-//   } else {
-//     room.setCustomValidity('');
-//     form.submit();
-//   }
-// });
+  } else {
+    room.setCustomValidity('');
+    form.submit();
+  }
+});
 
 button.addEventListener('submit', (event) => {
   event.preventDefault();
