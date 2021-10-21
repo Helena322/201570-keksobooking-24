@@ -13,6 +13,8 @@ const price = form.querySelector('#price');
 const type = form.querySelector('#type');
 const room = form.querySelector('#room_number');
 const capacity = form.querySelector('#capacity');
+const success = document.querySelector('#success');
+const submit = document.querySelector('.ad-form__submit');
 
 title.oninput = () => {
   if (title.value.length < MIN_TITLE_LENGTH) {
@@ -62,6 +64,14 @@ capacity.onchange = () => {
     room.setCustomValidity('');
   }
 };
+
+// submit.addEventListener('click', (evt) => {
+//   evt.preventDefault();
+//   const actualDisplay = getComputedStyle(success).display;
+//   if (actualDisplay === 'none') {
+//     success.style.display = 'block';
+//   }
+// });
 
 export const disableForm = () => {
   form.classList.add('ad-form--disabled');
