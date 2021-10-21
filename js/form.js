@@ -1,4 +1,4 @@
-import {MIN_TITLE_LENGTH, MAX_TITLE_LENGTH, MIN_PRICE, MAX_PRICE, PRICE_FOR_NIGHT} from './data.js';
+import {MIN_TITLE_LENGTH, MAX_TITLE_LENGTH, PRICE_FOR_NIGHT} from './data.js';
 
 const form = document.querySelector('.ad-form');
 let formElement = form.querySelector('fieldset');
@@ -13,6 +13,10 @@ const price = form.querySelector('#price');
 const type = form.querySelector('#type');
 const room = form.querySelector('#room_number');
 const capacity = form.querySelector('#capacity');
+const options = capacity.children;
+const timein = form.querySelector('#timein');
+const timeout = form.querySelector('#timeout');
+const button = form.querySelector('.ad-form__submit');
 
 title.oninput = () => {
   if (title.value.length < MIN_TITLE_LENGTH) {
@@ -24,44 +28,66 @@ title.oninput = () => {
   }
 };
 
-price.onchange = () => {
-  if (price.value < MIN_PRICE) {
-    price.setCustomValidity('Цена за ночь не меньше 1000');
-  } else if (price.value >= MAX_PRICE) {
-    price.setCustomValidity('Цена за ночь не больше 1 000 000.');
-  } else {
-    price.setCustomValidity('');
-  }
-};
-
 type.onchange = () => {
   price.placeholder = PRICE_FOR_NIGHT[type.value];
   price.min = PRICE_FOR_NIGHT[type.value];
 };
 
 room.onchange = () => {
-  if (room.value === '100' && capacity.value !== '0') {
-    room.setCustomValidity('Комнаты не для гостей');
-  } else if (room.value < capacity.value) {
-    room.setCustomValidity('Комнат меньше, чем гостей');
-  } else if (room.value === '100' && capacity.value === '0') {
-    room.setCustomValidity('');
-  } else if (room.value === capacity.value || room.value > capacity.value) {
-    room.setCustomValidity('');
+  if (room.value !== '100') {
+    options[2].setAttribute('selected', true);
+    options[3].style.display = 'none';
+    if (room.value === '3') {
+      options[2].style.display = 'block';
+      options[1].style.display = 'block';
+      options[0].style.display = 'block';
+    } else if (room.value === '2') {
+      options[2].style.display = 'block';
+      options[1].style.display = 'block';
+      options[0].style.display = 'none';
+    } else if (room.value === '1') {
+      options[2].style.display = 'block';
+      options[1].style.display = 'none';
+      options[0].style.display = 'none';
+    }
+  } else {
+    for (let i = 0; i < 3; i++) {
+      options[i].style.display = 'none';
+    }
+    options[3].style.display = 'block';
+    options[3].setAttribute('selected', true);
+    options[0].setAttribute('selected', false);
   }
 };
 
-capacity.onchange = () => {
-  if (room.value === '100' && capacity.value !== '0') {
-    room.setCustomValidity('Комнаты не для гостей');
-  } else if (room.value < capacity.value) {
-    room.setCustomValidity('Комнат меньше, чем гостей');
-  } else if (room.value === '100' && capacity.value === '0') {
-    room.setCustomValidity('');
-  } else if (room.value === capacity.value || room.value > capacity.value) {
-    room.setCustomValidity('');
+timein.addEventListener('change', () => {
+  timeout.value = timein.value;
+});
+
+// form.addEventListener('submit', (event) => {
+//   event.preventDefault();
+//   if (room.value > capacity.value) {
+//     button.addEventListener("submit", (event) => {
+//       event.preventDefault();
+//       room.setCustomValidity('Комнат меньше, чем гостей.');
+//     });
+
+//   } else {
+//     room.setCustomValidity('');
+//     form.submit();
+//   }
+// });
+
+button.addEventListener('submit', (event) => {
+  event.preventDefault();
+  if (room.value > capacity.value) {
+    room.setCustomValidity('Комнат меньше, чем гостей.');
   }
-};
+  else {
+    room.setCustomValidity('');
+    form.submit();
+  }
+});
 
 export const disableForm = () => {
   form.classList.add('ad-form--disabled');
