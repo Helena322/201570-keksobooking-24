@@ -16,7 +16,8 @@ const capacity = form.querySelector('#capacity');
 const options = capacity.children;
 const timein = form.querySelector('#timein');
 const timeout = form.querySelector('#timeout');
-const button = form.querySelector('.ad-form__submit');
+options[2].setAttribute('selected', true);
+price.min = PRICE_FOR_NIGHT[type.value];
 
 title.oninput = () => {
   if (title.value.length < MIN_TITLE_LENGTH) {
@@ -34,6 +35,7 @@ type.onchange = () => {
 };
 
 room.onchange = () => {
+
   if (room.value !== '100') {
     options[2].setAttribute('selected', true);
     options[3].style.display = 'none';
@@ -62,31 +64,6 @@ room.onchange = () => {
 
 timein.addEventListener('change', () => {
   timeout.value = timein.value;
-});
-
-// form.addEventListener('submit', (event) => {
-//   event.preventDefault();
-//   if (room.value > capacity.value) {
-//     button.addEventListener('submit', (event) => {
-//       event.preventDefault();
-//       room.setCustomValidity('Комнат меньше, чем гостей.');
-//     });
-
-//   } else {
-//     room.setCustomValidity('');
-//     form.submit();
-//   }
-// });
-
-button.addEventListener('submit', (event) => {
-  event.preventDefault();
-  if (room.value > capacity.value) {
-    room.setCustomValidity('Комнат меньше, чем гостей.');
-  }
-  else {
-    room.setCustomValidity('');
-    form.submit();
-  }
 });
 
 export const disableForm = () => {
