@@ -16,7 +16,8 @@ const capacity = form.querySelector('#capacity');
 const options = capacity.children;
 const timein = form.querySelector('#timein');
 const timeout = form.querySelector('#timeout');
-const button = form.querySelector('.ad-form__submit');
+options[2].setAttribute('selected', true);
+price.min = PRICE_FOR_NIGHT[type.value];
 
 title.oninput = () => {
   if (title.value.length < MIN_TITLE_LENGTH) {
@@ -87,6 +88,10 @@ button.addEventListener('submit', (event) => {
     room.setCustomValidity('');
     form.submit();
   }
+});
+
+timein.addEventListener('change', () => {
+  timeout.value = timein.value;
 });
 
 export const disableForm = () => {
