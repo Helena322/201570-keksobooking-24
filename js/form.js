@@ -45,6 +45,7 @@ room.onchange = () => {
     for (let i = 0; i < room.value; i++) {
       if (Number(option.value) === values[i]) {
         option.disabled = false;
+        capacity.value = option.value;
       }
     }
   });
