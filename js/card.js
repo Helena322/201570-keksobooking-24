@@ -1,4 +1,4 @@
-import {getOffers} from './util.js';
+// import {getOffers} from './util.js';
 
 export const TYPE = {
   palace: 'Дворец',
