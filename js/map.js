@@ -1,9 +1,13 @@
-import {POINTS} from './data.js';
+import {getOffers} from './util.js';
+import {getOffer} from './card.js';
+import {SIMILAR_OFFERS_COUNT} from './data.js';
 import {enableForm} from './form.js';
 export const TOKYO_LG = 35.6895000;
 export const TOKYO_LN = 139.6917100;
 export const adress = document.querySelector('#address');
 adress.value = `${TOKYO_LG}, ${TOKYO_LN}`;
+
+const similarOffers = Array.from({length: SIMILAR_OFFERS_COUNT}, getOffers);
 
 export const map = L.map('map-canvas')
   .on('load', () => {
@@ -13,7 +17,7 @@ export const map = L.map('map-canvas')
   .setView({
     lat: 35.6895000,
     lng: 139.6917100,
-  }, 15);
+  }, 10);
 
 export const layer = L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -44,17 +48,11 @@ mainPinMarker.addTo(map);
 
 mainPinMarker.on('moveend', (evt) => {
   const lll = evt.target.getLatLng();
-  adress.value = `${lll.lat.toFixed(6)} ${lll.lng.toFixed(6)}`;
+  adress.value = `${lll.lat.toFixed(5)} ${lll.lng.toFixed(5)}`;
 });
 
 const createCustomPopup = (point) => {
-  const balloonTemplate = document.querySelector('#card').content.querySelector('.popup');
-  const popupElement = balloonTemplate.cloneNode(true);
-
-  popupElement.querySelector('.popup__title').textContent = point.title;
-  popupElement.querySelector('.popup__text--address').textContent = point.adress;
-
-  return popupElement;
+  getOffer(point);
 };
 
 // const createCustomPopup = ({lat, lng, title, adress}) => `<section class="balloon">
@@ -62,8 +60,9 @@ const createCustomPopup = (point) => {
 //   <p class="popup__text--address">Адресс: ${adress}</p>
 // </section>`;
 
-POINTS.forEach((point) => {
-  const {lat, lng} = point;
+similarOffers.forEach((point) => {
+  const lat = point.location.adress[0];
+  const lng = point.location.adress[1];
 
   const icon = L.icon({
     iconUrl: '../img/pin.svg',
@@ -82,6 +81,5 @@ POINTS.forEach((point) => {
   );
 
   marker
-    .addTo(map)
-    .bindPopup(createCustomPopup(point));
+    .addTo(map).bindPopup(createCustomPopup(point));
 });
