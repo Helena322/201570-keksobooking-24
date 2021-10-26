@@ -13,7 +13,6 @@ const price = form.querySelector('#price');
 const type = form.querySelector('#type');
 const room = form.querySelector('#room_number');
 const capacity = form.querySelector('#capacity');
-
 const options = capacity.querySelectorAll('option');
 const timein = form.querySelector('#timein');
 const timeout = form.querySelector('#timeout');
@@ -51,10 +50,6 @@ room.onchange = () => {
     }
   });
 };
-
-timein.addEventListener('change', () => {
-  timeout.value = timein.value;
-});
 
 timein.addEventListener('change', () => {
   timeout.value = timein.value;

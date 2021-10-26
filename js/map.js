@@ -47,8 +47,8 @@ export const mainPinMarker = L.marker(
 mainPinMarker.addTo(map);
 
 mainPinMarker.on('moveend', (evt) => {
-  const lll = evt.target.getLatLng();
-  adress.value = `${lll.lat.toFixed(5)} ${lll.lng.toFixed(5)}`;
+  const coordinates = evt.target.getLatLng();
+  adress.value = `${coordinates.lat.toFixed(5)} ${coordinates.lng.toFixed(5)}`;
 });
 
 const createCustomPopup = (point) => {
