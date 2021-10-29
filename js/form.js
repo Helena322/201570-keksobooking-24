@@ -18,6 +18,7 @@ const timein = form.querySelector('#timein');
 const timeout = form.querySelector('#timeout');
 const button = form.querySelector('.ad-form__submit');
 // const success = document.querySelector('#success').content.querySelector('.success');
+// const error = document.querySelector('#error').content.querySelector('.error');
 
 capacity.value = ROOM_FOR_GIESTS[1];
 price.placeholder = PRICE_FOR_NIGHT[type.value];
@@ -91,6 +92,26 @@ export const enableForm = () => {
 
 button.addEventListener('click', (event) => {
   event.preventDefault();
+
+  if (!price.value || !title.value) {
+    const errorMessage = document.querySelector('#error').content.querySelector('.error');
+    const error = errorMessage.cloneNode(true);
+    document.body.appendChild(error);
+    document.addEventListener('keydown', (evt) => {
+      if (evt.keyCode === 27) {
+        document.body.removeChild(error);
+      }
+    });
+  } else {
+    const successMessage = document.querySelector('#success').content.querySelector('.success');
+    const success = successMessage.cloneNode(true);
+    document.body.appendChild(success);
+    document.addEventListener('keydown', (evt) => {
+      if (evt.keyCode === 27) {
+        document.body.removeChild(success);
+      }
+    });
+  }
 });
 
 disableForm();
