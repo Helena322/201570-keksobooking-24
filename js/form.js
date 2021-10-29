@@ -16,8 +16,12 @@ const capacity = form.querySelector('#capacity');
 const options = capacity.querySelectorAll('option');
 const timein = form.querySelector('#timein');
 const timeout = form.querySelector('#timeout');
+const button = form.querySelector('.ad-form__submit');
+// const success = document.querySelector('#success').content.querySelector('.success');
+
 capacity.value = ROOM_FOR_GIESTS[1];
 price.placeholder = PRICE_FOR_NIGHT[type.value];
+price.min = PRICE_FOR_NIGHT[type.value];
 
 title.oninput = () => {
   if (title.value.length < MIN_TITLE_LENGTH) {
@@ -85,5 +89,8 @@ export const enableForm = () => {
   mapFiltersFieldset.classList.remove('disabled');
 };
 
+button.addEventListener('click', (event) => {
+  event.preventDefault();
+});
+
 disableForm();
-// enableForm();
