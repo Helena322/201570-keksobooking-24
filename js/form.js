@@ -16,16 +16,12 @@ const capacity = form.querySelector('#capacity');
 const options = capacity.querySelectorAll('option');
 const timein = form.querySelector('#timein');
 const timeout = form.querySelector('#timeout');
-<<<<<<< HEAD
-options[2].setAttribute('selected', true);
-=======
 const button = form.querySelector('.ad-form__submit');
 // const success = document.querySelector('#success').content.querySelector('.success');
 // const error = document.querySelector('#error').content.querySelector('.error');
 
 capacity.value = ROOM_FOR_GIESTS[1];
 price.placeholder = PRICE_FOR_NIGHT[type.value];
->>>>>>> 040424e157d8fc1c527a1e2a60be79f688307a99
 price.min = PRICE_FOR_NIGHT[type.value];
 
 title.oninput = () => {
@@ -44,27 +40,6 @@ type.onchange = () => {
 };
 
 room.onchange = () => {
-<<<<<<< HEAD
-  if (room.value !== '100') {
-    options[2].setAttribute('selected', true);
-    options[3].style.display = 'none';
-    if (room.value === '3') {
-      options[2].style.display = 'block';
-      options[1].style.display = 'block';
-      options[0].style.display = 'block';
-    } else if (room.value === '2') {
-      options[2].style.display = 'block';
-      options[1].style.display = 'block';
-      options[0].style.display = 'none';
-    } else if (room.value === '1') {
-      options[2].style.display = 'block';
-      options[1].style.display = 'none';
-      options[0].style.display = 'none';
-    }
-  } else {
-    for (let i = 0; i < 3; i++) {
-      options[i].style.display = 'none';
-=======
   const values = Object.values(ROOM_FOR_GIESTS[room.value]);
 
   options.forEach((option) => {
@@ -77,7 +52,6 @@ room.onchange = () => {
         option.disabled = false;
         capacity.value = option.value;
       }
->>>>>>> 040424e157d8fc1c527a1e2a60be79f688307a99
     }
   });
 };
@@ -86,38 +60,6 @@ timein.addEventListener('change', () => {
   timeout.value = timein.value;
 });
 
-<<<<<<< HEAD
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
-  if (room.value > capacity.value) {
-    button.addEventListener("submit", (event) => {
-      event.preventDefault();
-      room.setCustomValidity('Комнат меньше, чем гостей.');
-    });
-
-  } else {
-    room.setCustomValidity('');
-    form.submit();
-  }
-});
-
-button.addEventListener('submit', (event) => {
-  event.preventDefault();
-  if (room.value > capacity.value) {
-    room.setCustomValidity('Комнат меньше, чем гостей.');
-  }
-  else {
-    room.setCustomValidity('');
-    form.submit();
-  }
-});
-
-timein.addEventListener('change', () => {
-  timeout.value = timein.value;
-});
-
-=======
->>>>>>> 040424e157d8fc1c527a1e2a60be79f688307a99
 export const disableForm = () => {
   form.classList.add('ad-form--disabled');
   mapFilters.classList.add('map__filters--disabled');
