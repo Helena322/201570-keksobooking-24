@@ -64,14 +64,6 @@ export const getRandomAvatarNumber = () => {
   return (getAvatarNumber < 10) ? avatarLink.padEnd(17, '0') + getAvatarNumber + avatarFormat : avatarLink + getAvatarNumber + avatarFormat;
 };
 
-// export const getOffers = (() => (
-//   {
-//     autor: [getRandomArrayElement(AUTOR), getRandomAvatarNumber()],
-//     offer: [getRandomArrayElement(TITLE), getRandomAdress(), getRandomPrice(), getRandomArrayElement(TYPE), getRandomRooms(), getRandomGiests(), getRandomArrayElement(CHECKIN), getRandomArrayElement(CHECKOUT), getOfferDescription(FEATURES), getRandomArrayElement(DESCRIPTION), getRandomArrayElement(PHOTOS)],
-//     location: [getRandomAdress()],
-//   }
-// ));
-
 export const getOffers = (() => (
   {
     autor: {name: getRandomArrayElement(AUTOR), avatar: getRandomAvatarNumber()},

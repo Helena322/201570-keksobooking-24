@@ -1,6 +1,4 @@
-import {getOffers} from './util.js';
-
-export const TYPE = {
+export const ACOMMODATION_TYPES = {
   palace: 'Дворец',
   flat: 'Квартира',
   house: 'Дом',
@@ -8,8 +6,8 @@ export const TYPE = {
   hotel: 'Отель',
 };
 
-export const getNewType = (newT) => (
-  TYPE[newT]
+export const getType = (type) => (
+  ACOMMODATION_TYPES[type]
 );
 
 export const card = document.querySelector('#card').content.querySelector('.popup');
@@ -39,7 +37,7 @@ export const getOffer = (call) => {
   if (!call.offer.type) {
     card.querySelector('.popup__type').classList.add('hidden');
   } else {
-    card.querySelector('.popup__type').textContent = getNewType(call.offer.type);
+    card.querySelector('.popup__type').textContent = getType(call.offer.type);
   }
 
   if (!call.offer.giests || !call.offer.rooms) {
@@ -60,9 +58,16 @@ export const getOffer = (call) => {
   if (!call.offer.features) {
     card.querySelector('.popup__features').classList.add('hidden');
   } else {
-    for (let i = 0; i < call.offer.features.length - 1; i++) {
-      card.querySelector('.popup__features').textContent = call.offer.features.join(', ');
-    }
+    const features = call.offer.features;
+    const feature = card.querySelector('.popup__features');
+    feature.innerHTML = '';
+
+    features.forEach((element) => {
+      const featureItem = document.createElement('li');
+      featureItem.classList.add('popup__feature');
+      featureItem.classList.add(`popup__feature--${element}`);
+      card.querySelector('.popup__features').appendChild(featureItem);
+    });
   }
 
   if (!call.offer.description) {
@@ -83,7 +88,5 @@ export const getOffer = (call) => {
     card.querySelector('.popup__avatar').src = call.autor.avatar;
   }
 
-  canvas.appendChild(card);
+  return card;
 };
-
-getOffer(getOffers());
