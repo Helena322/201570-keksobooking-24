@@ -98,12 +98,10 @@ button.addEventListener('click', (event) => {
     document.addEventListener('keydown', (evt) => {
       if (evt.keyCode === 27) {
         document.body.removeChild(error);
-
       }
     });
     error.addEventListener('click', () => {
       document.body.removeChild(error);
-
     });
   } else {
     const successMessage = document.querySelector('#success').content.querySelector('.success');
@@ -112,12 +110,10 @@ button.addEventListener('click', (event) => {
     document.addEventListener('keydown', (evt) => {
       if (evt.keyCode === 27) {
         document.body.removeChild(success);
-
       }
     });
     success.addEventListener('click', () => {
       document.body.removeChild(success);
-
     });
   }
 });
