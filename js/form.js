@@ -1,5 +1,4 @@
 import {MIN_TITLE_LENGTH, MAX_TITLE_LENGTH, PRICE_FOR_NIGHT, ROOM_FOR_GIESTS} from './data.js';
-// import {backToStart} from './map.js';
 
 const form = document.querySelector('.ad-form');
 let formElement = form.querySelector('fieldset');
