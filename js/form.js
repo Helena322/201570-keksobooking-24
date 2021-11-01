@@ -1,4 +1,5 @@
 import {MIN_TITLE_LENGTH, MAX_TITLE_LENGTH, PRICE_FOR_NIGHT, ROOM_FOR_GIESTS} from './data.js';
+import {mainPinMarker} from './map.js';
 
 const form = document.querySelector('.ad-form');
 let formElement = form.querySelector('fieldset');
@@ -114,6 +115,17 @@ button.addEventListener('click', (event) => {
     });
     success.addEventListener('click', () => {
       document.body.removeChild(success);
+      title.value = '';
+      capacity.value = ROOM_FOR_GIESTS[1];
+      room.value = capacity.value;
+      type.value = 'flat';
+      price.value = '';
+      price.placeholder = PRICE_FOR_NIGHT[type.value];
+      price.min = PRICE_FOR_NIGHT[type.value];
+      mainPinMarker.setLatLng({
+        lat: 35.6895000,
+        lng: 139.6917100,
+      });
     });
   }
 });
