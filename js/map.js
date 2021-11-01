@@ -13,7 +13,7 @@ export const map = L.map('map-canvas')
   .setView({
     lat: 35.6895000,
     lng: 139.6917100,
-  }, 10);
+  }, 15);
 
 export const layer = L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -40,6 +40,11 @@ export const mainPinMarker = L.marker(
   },
 );
 
+// export const backToStart = mainPinMarker.setLatLng({
+//   lat: 35.6895000,
+//   lng: 139.6917100,
+// });
+
 mainPinMarker.addTo(map);
 
 mainPinMarker.on('moveend', (evt) => {
@@ -47,16 +52,11 @@ mainPinMarker.on('moveend', (evt) => {
   adress.value = `${lll.lat.toFixed(5)} ${lll.lng.toFixed(5)}`;
 });
 
-// const createCustomPopup = ({lat, lng, title, adress}) => `<section class="balloon">
-//   <h3 class="balloon__title">${title}</h3>
-//   <p class="popup__text--address">Адресс: ${adress}</p>
-// </section>`;
-
 const showData = ((data) => {
   data.forEach((point) => {
 
-    const lat = point.location.adress[0];
-    const lng = point.location.adress[1];
+    const lat = point.location.lat;
+    const lng = point.location.lng;
 
     const icon = L.icon({
       iconUrl: '../img/pin.svg',

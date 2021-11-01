@@ -1,4 +1,5 @@
 import {MIN_TITLE_LENGTH, MAX_TITLE_LENGTH, PRICE_FOR_NIGHT, ROOM_FOR_GIESTS} from './data.js';
+// import {backToStart} from './map.js';
 
 const form = document.querySelector('.ad-form');
 let formElement = form.querySelector('fieldset');
@@ -17,8 +18,6 @@ const options = capacity.querySelectorAll('option');
 const timein = form.querySelector('#timein');
 const timeout = form.querySelector('#timeout');
 const button = form.querySelector('.ad-form__submit');
-// const success = document.querySelector('#success').content.querySelector('.success');
-// const error = document.querySelector('#error').content.querySelector('.error');
 
 capacity.value = ROOM_FOR_GIESTS[1];
 price.placeholder = PRICE_FOR_NIGHT[type.value];
@@ -100,7 +99,12 @@ button.addEventListener('click', (event) => {
     document.addEventListener('keydown', (evt) => {
       if (evt.keyCode === 27) {
         document.body.removeChild(error);
+
       }
+    });
+    error.addEventListener('click', () => {
+      document.body.removeChild(error);
+
     });
   } else {
     const successMessage = document.querySelector('#success').content.querySelector('.success');
@@ -109,7 +113,12 @@ button.addEventListener('click', (event) => {
     document.addEventListener('keydown', (evt) => {
       if (evt.keyCode === 27) {
         document.body.removeChild(success);
+
       }
+    });
+    success.addEventListener('click', () => {
+      document.body.removeChild(success);
+
     });
   }
 });
