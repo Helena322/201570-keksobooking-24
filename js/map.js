@@ -40,11 +40,6 @@ export const mainPinMarker = L.marker(
   },
 );
 
-// export const backToStart = mainPinMarker.setLatLng({
-//   lat: 35.6895000,
-//   lng: 139.6917100,
-// });
-
 mainPinMarker.addTo(map);
 
 mainPinMarker.on('moveend', (evt) => {
