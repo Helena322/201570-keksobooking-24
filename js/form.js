@@ -1,5 +1,6 @@
 import {MIN_TITLE_LENGTH, MAX_TITLE_LENGTH, PRICE_FOR_NIGHT, ROOM_FOR_GIESTS} from './data.js';
 import {mainPinMarker} from './map.js';
+import {showAlert} from './util.js';
 
 const form = document.querySelector('.ad-form');
 let formElement = form.querySelector('fieldset');
@@ -18,6 +19,8 @@ const options = capacity.querySelectorAll('option');
 const timein = form.querySelector('#timein');
 const timeout = form.querySelector('#timeout');
 const button = form.querySelector('.ad-form__submit');
+const successMessage = document.querySelector('#success').content.querySelector('.success');
+const errorMessage = document.querySelector('#error').content.querySelector('.error');
 
 capacity.value = ROOM_FOR_GIESTS[1];
 price.placeholder = PRICE_FOR_NIGHT[type.value];
@@ -26,7 +29,7 @@ price.min = PRICE_FOR_NIGHT[type.value];
 title.oninput = () => {
   if (title.value.length < MIN_TITLE_LENGTH) {
     title.setCustomValidity('Заголовок меньше 30 символов.');
-  } else if (title.value.length >= MAX_TITLE_LENGTH) {
+  } else if (title.value.length > MAX_TITLE_LENGTH) {
     title.setCustomValidity('Заголовок не должен превышать 100 символов.');
   } else {
     title.setCustomValidity('');
@@ -89,11 +92,9 @@ export const enableForm = () => {
   mapFiltersFieldset.classList.remove('disabled');
 };
 
-button.addEventListener('click', (event) => {
-  event.preventDefault();
+button.addEventListener('click', () => {
 
-  if (!price.value || !title.value) {
-    const errorMessage = document.querySelector('#error').content.querySelector('.error');
+  if (!price.value || !title.value || title.value.length < MIN_TITLE_LENGTH || title.value.length >= MAX_TITLE_LENGTH) {
     const error = errorMessage.cloneNode(true);
     document.body.appendChild(error);
     document.addEventListener('keydown', (evt) => {
@@ -105,7 +106,6 @@ button.addEventListener('click', (event) => {
       document.body.removeChild(error);
     });
   } else {
-    const successMessage = document.querySelector('#success').content.querySelector('.success');
     const success = successMessage.cloneNode(true);
     document.body.appendChild(success);
     document.addEventListener('keydown', (evt) => {
@@ -128,6 +128,30 @@ button.addEventListener('click', (event) => {
       });
     });
   }
+});
+
+form.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+
+  const formData = new FormData(evt.target);
+
+  fetch(
+    'https://24.javascript.pages.academy/keksobooking/data',
+    {
+      method: 'POST',
+      body: formData,
+    },
+  )
+    .then((response) => {
+      if (response.ok) {
+        showAlert('Все оk');
+      } else {
+        showAlert('Не удалось отправить форму. Попробуйте ещё раз');
+      }
+    })
+    .catch(() => {
+      showAlert('Не удалось отправить форму. Попробуйте ещё раз');
+    });
 });
 
 disableForm();

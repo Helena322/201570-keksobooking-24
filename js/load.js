@@ -1,28 +1,30 @@
 import {showData} from './map.js';
 
-const createLoader = async (onError) => {
-  try {
-    const response = await fetch(
-      'https://24.javascript.pages.academy/keksobooking/data',
-      {
-        method: 'POST',
-        credentials: 'same-origin',
-      });
+fetch('https://24.javascript.pages.academy/keksobooking/data')
+.then((response) => response.json())
+.then((data) => {
+  showData(data);
+});
 
-    if (response.ok) {
-      return response.json();
-    }
-
-    throw new Error(`${response.status} ${response.statusText}`);
-  } catch (err) {
-    onError(err);
-  }
+const sendData = (onSuccess, onFail, body) => {
+  fetch(
+    'https://24.javascript.pages.academy/keksobooking',
+    {
+      method: 'POST',
+      body,
+    },
+  )
+    .then((response) => {
+      if (response.ok) {
+        document.querySelector('.ad-form__reset').click();
+        onSuccess();
+      } else {
+        onFail('Не удалось отправить форму. Попробуйте ещё раз');
+      }
+    })
+    .catch(() => {
+      onFail('Не удалось отправить форму. Попробуйте ещё раз');
+    });
 };
 
-fetch('https://24.javascript.pages.academy/keksobooking/data')
-  .then((response) => response.json())
-  .then((data) => {
-    showData(data);
-  });
-
-export {createLoader};
+export {sendData};

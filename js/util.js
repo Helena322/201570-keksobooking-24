@@ -1,5 +1,7 @@
 import {AUTOR, TITLE, TYPE, CHECKIN, CHECKOUT, FEATURES, DESCRIPTION, PHOTOS} from './data.js';
 
+export const ALERT_SHOW_TIME = 5000;
+
 export const getRandomFloatRange = ((from, to, point = 0) => {
   const min = Math.min(from, to);
   const max = Math.max(from, to);
@@ -81,3 +83,24 @@ export const getOffers = (() => (
     location: {adress: getRandomAdress()},
   }
 ));
+
+export const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 100;
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = 0;
+  alertContainer.style.top = 0;
+  alertContainer.style.right = 0;
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '30px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'red';
+
+  alertContainer.textContent = message;
+
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
+}
