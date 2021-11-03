@@ -1,11 +1,10 @@
 import {showData} from './map.js';
-import {SIMILAR_DATA_COUNT} from './data.js';
 
 const getData = () => {
   fetch('https://24.javascript.pages.academy/keksobooking/data')
     .then((response) => response.json())
     .then((data) => {
-      showData(data.slice(0, SIMILAR_DATA_COUNT));
+      showData(data);
     });
 };
 

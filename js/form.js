@@ -1,6 +1,5 @@
-import {MIN_TITLE_LENGTH, MAX_TITLE_LENGTH, PRICE_FOR_NIGHT, ROOM_FOR_GIESTS} from './data.js';
+import {MIN_TITLE_LENGTH, MAX_TITLE_LENGTH, PRICE_FOR_NIGHT, ROOM_FOR_GIESTS} from './model.js';
 import {mainPinMarker} from './map.js';
-import {showAlert} from './util.js';
 import {sendData} from './load.js';
 
 const form = document.querySelector('.ad-form');
@@ -19,7 +18,6 @@ const capacity = form.querySelector('#capacity');
 const options = capacity.querySelectorAll('option');
 const timein = form.querySelector('#timein');
 const timeout = form.querySelector('#timeout');
-const button = form.querySelector('.ad-form__submit');
 const successMessage = document.querySelector('#success').content.querySelector('.success');
 const errorMessage = document.querySelector('#error').content.querySelector('.error');
 
@@ -93,49 +91,49 @@ export const enableForm = () => {
   mapFiltersFieldset.classList.remove('disabled');
 };
 
-button.addEventListener('click', () => {
-
-  if (!price.value || !title.value || title.value.length < MIN_TITLE_LENGTH || title.value.length >= MAX_TITLE_LENGTH) {
-    const error = errorMessage.cloneNode(true);
-    document.body.appendChild(error);
-    document.addEventListener('keydown', (evt) => {
-      if (evt.keyCode === 27) {
-        document.body.removeChild(error);
-      }
-    });
-    error.addEventListener('click', () => {
+const messageError = () => {
+  const error = errorMessage.cloneNode(true);
+  document.body.appendChild(error);
+  document.addEventListener('keydown', (evt) => {
+    if (evt.keyCode === 27) {
       document.body.removeChild(error);
-    });
-  } else {
-    const success = successMessage.cloneNode(true);
-    document.body.appendChild(success);
-    document.addEventListener('keydown', (evt) => {
-      if (evt.keyCode === 27) {
-        document.body.removeChild(success);
-      }
-    });
-    success.addEventListener('click', () => {
+    }
+  });
+  error.addEventListener('click', () => {
+    document.body.removeChild(error);
+  });
+};
+
+const messageSuccess = () => {
+  const success = successMessage.cloneNode(true);
+  document.body.appendChild(success);
+  document.addEventListener('keydown', (evt) => {
+    if (evt.keyCode === 27) {
       document.body.removeChild(success);
-      title.value = '';
-      capacity.value = ROOM_FOR_GIESTS[1];
-      room.value = capacity.value;
-      type.value = 'flat';
-      price.value = '';
-      price.placeholder = PRICE_FOR_NIGHT[type.value];
-      price.min = PRICE_FOR_NIGHT[type.value];
-      mainPinMarker.setLatLng({
-        lat: 35.6895000,
-        lng: 139.6917100,
-      });
+    }
+  });
+
+  success.addEventListener('click', () => {
+    document.body.removeChild(success);
+    title.value = '';
+    capacity.value = ROOM_FOR_GIESTS[1];
+    room.value = capacity.value;
+    type.value = 'flat';
+    price.value = '';
+    price.placeholder = PRICE_FOR_NIGHT[type.value];
+    price.min = PRICE_FOR_NIGHT[type.value];
+    mainPinMarker.setLatLng({
+      lat: 35.6895000,
+      lng: 139.6917100,
     });
-  }
-});
+  });
+};
 
 form.addEventListener('submit', (evt) => {
   evt.preventDefault();
   sendData(
-    () => showAlert('Форма отправлена успешно'),
-    () => showAlert('Ошибка отправки формы'),
+    () => messageSuccess(),
+    () => messageError(),
     new FormData(evt.target),
   );
 });
