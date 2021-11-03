@@ -17,6 +17,10 @@ export const getOffer = (data) => {
   card.cloneNode(true);
 
   const setCardContent = (isCondition, selector, content) => {
+    if (data.author.avatar) {
+      card.querySelector(selector).src = content;
+      return;
+    }
     if (!isCondition) {
       card.querySelector(selector).classList.add('hidden');
       return;
@@ -24,13 +28,10 @@ export const getOffer = (data) => {
     if (card.querySelector(selector).classList.contains('hidden')) {
       card.querySelector(selector).classList.remove('hidden');
     }
-    if (data.author.avatar) {
-      card.querySelector(selector).src = content;
-      return;
-    }
     card.querySelector(selector).textContent = content;
   };
 
+  setCardContent(data.author.avatar, '.popup__avatar', data.author.avatar);
   setCardContent(data.offer.title, '.popup__title', data.offer.title);
   setCardContent(data.offer.address, '.popup__text--address', data.offer.address);
   setCardContent(data.offer.price, '.popup__text--price', data.offer.price);
@@ -38,7 +39,6 @@ export const getOffer = (data) => {
   setCardContent(data.offer.guests || data.offer.rooms, '.popup__text--capacity', `${data.offer.rooms} комнаты для ${data.offer.guests} гостей.`);
   setCardContent(data.offer.checkin || data.offer.checkout, '.popup__text--time', `Заезд после ${data.offer.checkin}, выезд до ${data.offer.checkout}`);
   setCardContent(data.offer.description, '.popup__description', data.offer.description);
-  setCardContent(data.author.avatar, '.popup__avatar', data.author.avatar);
 
   if (!data.offer.features) {
     card.querySelector('.popup__features').classList.add('hidden');
