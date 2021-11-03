@@ -1,6 +1,7 @@
 import {MIN_TITLE_LENGTH, MAX_TITLE_LENGTH, PRICE_FOR_NIGHT, ROOM_FOR_GIESTS} from './data.js';
 import {mainPinMarker} from './map.js';
 import {showAlert} from './util.js';
+import {sendData} from './load.js';
 
 const form = document.querySelector('.ad-form');
 let formElement = form.querySelector('fieldset');
@@ -132,26 +133,11 @@ button.addEventListener('click', () => {
 
 form.addEventListener('submit', (evt) => {
   evt.preventDefault();
-
-  const formData = new FormData(evt.target);
-
-  fetch(
-    'https://24.javascript.pages.academy/keksobooking/data',
-    {
-      method: 'POST',
-      body: formData,
-    },
-  )
-    .then((response) => {
-      if (response.ok) {
-        showAlert('Все оk');
-      } else {
-        showAlert('Не удалось отправить форму. Попробуйте ещё раз');
-      }
-    })
-    .catch(() => {
-      showAlert('Не удалось отправить форму. Попробуйте ещё раз');
-    });
+  sendData(
+    () => showAlert('Форма отправлена успешно'),
+    () => showAlert('Ошибка отправки формы'),
+    new FormData(evt.target),
+  );
 });
 
 disableForm();
