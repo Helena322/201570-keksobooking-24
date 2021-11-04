@@ -1,4 +1,6 @@
-import {MIN_TITLE_LENGTH, MAX_TITLE_LENGTH, PRICE_FOR_NIGHT, ROOM_FOR_GIESTS} from './data.js';
+import {MIN_TITLE_LENGTH, MAX_TITLE_LENGTH, PRICE_FOR_NIGHT, ROOM_FOR_GIESTS} from './model.js';
+import {mainPinMarker} from './map.js';
+import {sendData} from './load.js';
 
 const form = document.querySelector('.ad-form');
 let formElement = form.querySelector('fieldset');
@@ -16,9 +18,8 @@ const capacity = form.querySelector('#capacity');
 const options = capacity.querySelectorAll('option');
 const timein = form.querySelector('#timein');
 const timeout = form.querySelector('#timeout');
-const button = form.querySelector('.ad-form__submit');
-// const success = document.querySelector('#success').content.querySelector('.success');
-// const error = document.querySelector('#error').content.querySelector('.error');
+const successMessage = document.querySelector('#success').content.querySelector('.success');
+const errorMessage = document.querySelector('#error').content.querySelector('.error');
 
 capacity.value = ROOM_FOR_GIESTS[1];
 price.placeholder = PRICE_FOR_NIGHT[type.value];
@@ -27,7 +28,7 @@ price.min = PRICE_FOR_NIGHT[type.value];
 title.oninput = () => {
   if (title.value.length < MIN_TITLE_LENGTH) {
     title.setCustomValidity('Заголовок меньше 30 символов.');
-  } else if (title.value.length >= MAX_TITLE_LENGTH) {
+  } else if (title.value.length > MAX_TITLE_LENGTH) {
     title.setCustomValidity('Заголовок не должен превышать 100 символов.');
   } else {
     title.setCustomValidity('');
@@ -90,28 +91,51 @@ export const enableForm = () => {
   mapFiltersFieldset.classList.remove('disabled');
 };
 
-button.addEventListener('click', (event) => {
-  event.preventDefault();
+const messageError = () => {
+  const error = errorMessage.cloneNode(true);
+  document.body.appendChild(error);
+  document.addEventListener('keydown', (evt) => {
+    if (evt.keyCode === 27) {
+      document.body.removeChild(error);
+    }
+  });
+  error.addEventListener('click', () => {
+    document.body.removeChild(error);
+  });
+};
 
-  if (!price.value || !title.value) {
-    const errorMessage = document.querySelector('#error').content.querySelector('.error');
-    const error = errorMessage.cloneNode(true);
-    document.body.appendChild(error);
-    document.addEventListener('keydown', (evt) => {
-      if (evt.keyCode === 27) {
-        document.body.removeChild(error);
-      }
+const messageSuccess = () => {
+  const success = successMessage.cloneNode(true);
+  document.body.appendChild(success);
+  document.addEventListener('keydown', (evt) => {
+    if (evt.keyCode === 27) {
+      document.body.removeChild(success);
+    }
+  });
+
+  success.addEventListener('click', () => {
+    document.body.removeChild(success);
+    title.value = '';
+    capacity.value = ROOM_FOR_GIESTS[1];
+    room.value = capacity.value;
+    type.value = 'flat';
+    price.value = '';
+    price.placeholder = PRICE_FOR_NIGHT[type.value];
+    price.min = PRICE_FOR_NIGHT[type.value];
+    mainPinMarker.setLatLng({
+      lat: 35.6895000,
+      lng: 139.6917100,
     });
-  } else {
-    const successMessage = document.querySelector('#success').content.querySelector('.success');
-    const success = successMessage.cloneNode(true);
-    document.body.appendChild(success);
-    document.addEventListener('keydown', (evt) => {
-      if (evt.keyCode === 27) {
-        document.body.removeChild(success);
-      }
-    });
-  }
+  });
+};
+
+form.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  sendData(
+    () => messageSuccess(),
+    () => messageError(),
+    new FormData(evt.target),
+  );
 });
 
 disableForm();
