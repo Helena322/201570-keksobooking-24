@@ -43,9 +43,11 @@ export const mainPinMarker = L.marker(
 mainPinMarker.addTo(map);
 
 mainPinMarker.on('moveend', (evt) => {
-  const lll = evt.target.getLatLng();
-  adress.value = `${lll.lat.toFixed(5)} ${lll.lng.toFixed(5)}`;
+  const coordinatesOfPlace = evt.target.getLatLng();
+  adress.value = `${coordinatesOfPlace.lat.toFixed(5)} ${coordinatesOfPlace.lng.toFixed(5)}`;
 });
+
+const markerGroup = L.layerGroup().addTo(map);
 
 const showData = ((data) => {
   data.forEach((point) => {
@@ -69,9 +71,13 @@ const showData = ((data) => {
     );
 
     marker
-      .addTo(map)
+      .addTo(markerGroup)
       .bindPopup(() => getOffer(point));
   });
 });
 
-export {showData};
+const resetMap = () => {
+  markerGroup.clearLayers();
+};
+
+export {showData, resetMap};
