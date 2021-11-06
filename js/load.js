@@ -1,10 +1,8 @@
-import {showData} from './map.js';
-
-const getData = () => {
+const getData = (onSuccess) => {
   fetch('https://24.javascript.pages.academy/keksobooking/data')
     .then((response) => response.json())
     .then((data) => {
-      showData(data);
+      onSuccess(data);
     });
 };
 
@@ -28,6 +26,4 @@ const sendData = (onSuccess, onFail, body) => {
     });
 };
 
-getData();
-
-export {sendData};
+export {sendData, getData};

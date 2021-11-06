@@ -11,8 +11,8 @@ export const map = L.map('map-canvas')
   })
 
   .setView({
-    lat: 35.6895000,
-    lng: 139.6917100,
+    lat: 35.67508,
+    lng: 139.73490,
   }, 13);
 
 export const layer = L.tileLayer(
@@ -30,8 +30,8 @@ export const mainPinIcon = L.icon({
 
 export const mainPinMarker = L.marker(
   {
-    lat: 35.6895000,
-    lng: 139.6917100,
+    lat: 35.67508,
+    lng: 139.73490,
   },
 
   {
@@ -56,7 +56,7 @@ const showData = ((data) => {
     const icon = L.icon({
       iconUrl: '../img/pin.svg',
       iconSize: [40, 40],
-      iconAnchor: [26, 52],
+      iconAnchor: [20, 40],
     });
     const marker = L.marker(
       {
@@ -74,4 +74,4 @@ const showData = ((data) => {
   });
 });
 
-export { showData };
+export {showData};

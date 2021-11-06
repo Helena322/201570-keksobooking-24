@@ -123,8 +123,8 @@ const messageSuccess = () => {
     price.placeholder = PRICE_FOR_NIGHT[type.value];
     price.min = PRICE_FOR_NIGHT[type.value];
     mainPinMarker.setLatLng({
-      lat: 35.6895000,
-      lng: 139.6917100,
+      lat: 35.67508,
+      lng: 139.73490,
     });
   });
 };
