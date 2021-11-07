@@ -19,14 +19,27 @@ const PRICE = {
   middle: 50000,
 };
 
-export const getFilter = (data) => {
+const RERENDER_DELAY = 500;
+
+export const getFilter = (_.debounce((data) => {
   const dataList = data;
 
   const getFilterValue = (element) => {
     element.onchange = () => {
       resetMap();
+
+      const filtereCheckBoxes = () => {
+        const featuresChecked = document.querySelectorAll('[name="features"]:checked');
+        const checkedValues = Array.from(featuresChecked).map((isElement) => isElement.value);
+        return dataList.filter((elementList) => {
+          if (elementList.offer.features) {
+            return checkedValues.every((features) => elementList.offer.features.includes(features));
+          }
+        }).slice(0, SIMILAR_DATA_COUNT);
+      };
+
       const filteredGuests = () => (
-        dataList.filter((elementOfList) => elementOfList.offer.rooms === Number(guests.value) || guests.value === DEFAULT_ANY || guests.value === DEFAULT_GUEST_ZERO)
+        filtereCheckBoxes().filter((elementOfList) => elementOfList.offer.guests === Number(guests.value) || guests.value === DEFAULT_ANY || guests.value === DEFAULT_GUEST_ZERO)
       );
 
       const filteredRooms = () => (
@@ -48,6 +61,7 @@ export const getFilter = (data) => {
       const filteredType = () => (
         filteredPrice().filter((elementOfList) => elementOfList.offer.type === type.value || type.value === DEFAULT_ANY)
       );
+
       showData(filteredType().slice(0, SIMILAR_DATA_COUNT));
     };
 
@@ -61,7 +75,8 @@ export const getFilter = (data) => {
     getFilterValue(element);
   });
 
-};
+}, RERENDER_DELAY));
+
 
 getData((data) => {
   showData(data.slice(0, SIMILAR_DATA_COUNT));
