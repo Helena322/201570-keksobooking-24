@@ -1,9 +1,9 @@
 import {getOffer} from './card.js';
-import {enableForm} from './form.js';
+import {enableForm, address} from './form.js';
+
 export const TOKYO_LG = 35.6895000;
 export const TOKYO_LN = 139.6917100;
-export const adress = document.querySelector('#address');
-adress.value = `${TOKYO_LG}, ${TOKYO_LN}`;
+address.value = `${TOKYO_LG}, ${TOKYO_LN}`;
 
 export const map = L.map('map-canvas')
   .on('load', () => {
@@ -44,7 +44,7 @@ mainPinMarker.addTo(map);
 
 mainPinMarker.on('moveend', (evt) => {
   const coordinatesOfPlace = evt.target.getLatLng();
-  adress.value = `${coordinatesOfPlace.lat.toFixed(5)} ${coordinatesOfPlace.lng.toFixed(5)}`;
+  address.value = `${coordinatesOfPlace.lat.toFixed(5)} ${coordinatesOfPlace.lng.toFixed(5)}`;
 });
 
 const markerGroup = L.layerGroup().addTo(map);

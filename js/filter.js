@@ -24,42 +24,42 @@ const RERENDER_DELAY = 500;
 export const getFilter = (_.debounce((data) => {
   const dataList = data;
 
-  const getFilterValue = (element) => {
-    element.onchange = () => {
+  const getFilterValue = (filterElement) => {
+    filterElement.onchange = () => {
       resetMap();
 
       const filtereCheckBoxes = () => {
         const featuresChecked = document.querySelectorAll('[name="features"]:checked');
-        const checkedValues = Array.from(featuresChecked).map((isElement) => isElement.value);
-        return dataList.filter((elementList) => {
-          if (elementList.offer.features) {
-            return checkedValues.every((features) => elementList.offer.features.includes(features));
+        const checkedValues = Array.from(featuresChecked).map((checkBoxElement) => checkBoxElement.value);
+        return dataList.filter((elementOfDada) => {
+          if (elementOfDada.offer.features) {
+            return checkedValues.every((features) => elementOfDada.offer.features.includes(features));
           }
-        }).slice(0, SIMILAR_DATA_COUNT);
+        });
       };
 
       const filteredGuests = () => (
-        filtereCheckBoxes().filter((elementOfList) => elementOfList.offer.guests === Number(guests.value) || guests.value === DEFAULT_ANY || guests.value === DEFAULT_GUEST_ZERO)
+        filtereCheckBoxes().filter((elementOfDada) => elementOfDada.offer.guests === Number(guests.value) || guests.value === DEFAULT_ANY || guests.value === DEFAULT_GUEST_ZERO)
       );
 
       const filteredRooms = () => (
-        filteredGuests().filter((elementOfList) => elementOfList.offer.rooms === Number(rooms.value) || rooms.value === DEFAULT_ANY)
+        filteredGuests().filter((elementOfDada) => elementOfDada.offer.rooms === Number(rooms.value) || rooms.value === DEFAULT_ANY)
       );
 
       const filteredPrice = () => {
         if (price.value === 'low') {
-          return filteredRooms().filter((elementOfList) => elementOfList.offer.price < PRICE.min);
+          return filteredRooms().filter((elementOfDada) => elementOfDada.offer.price < PRICE.min);
         } else if (price.value === 'middle') {
-          return filteredRooms().filter((elementOfList) => elementOfList.offer.price >= PRICE.min && elementOfList.offer.price <= PRICE.middle);
+          return filteredRooms().filter((elementOfDada) => elementOfDada.offer.price >= PRICE.min && elementOfDada.offer.price <= PRICE.middle);
         } else if (price.value === 'high') {
-          return filteredRooms().filter((elementOfList) => elementOfList.offer.price > PRICE.middle || price.value === DEFAULT_ANY);
+          return filteredRooms().filter((elementOfDada) => elementOfDada.offer.price > PRICE.middle || price.value === DEFAULT_ANY);
         } else if (price.value === DEFAULT_ANY) {
           return filteredRooms();
         }
       };
 
       const filteredType = () => (
-        filteredPrice().filter((elementOfList) => elementOfList.offer.type === type.value || type.value === DEFAULT_ANY)
+        filteredPrice().filter((elementOfDada) => elementOfDada.offer.type === type.value || type.value === DEFAULT_ANY)
       );
 
       showData(filteredType().slice(0, SIMILAR_DATA_COUNT));
