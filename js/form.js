@@ -1,14 +1,16 @@
-import {MIN_TITLE_LENGTH, MAX_TITLE_LENGTH, PRICE_FOR_NIGHT, ROOM_FOR_GIESTS} from './model.js';
-import {mainPinMarker} from './map.js';
+import {MIN_TITLE_LENGTH, MAX_TITLE_LENGTH, PRICE_FOR_NIGHT, ROOM_FOR_GIESTS, SIMILAR_DATA_COUNT} from './model.js';
+import {mainPinMarker, TOKYO_LG, TOKYO_LN} from './map.js';
 import {sendData} from './load.js';
+import {showData, resetMap} from './map.js';
+import {getData} from './load.js';
 
 const form = document.querySelector('.ad-form');
 let formElement = form.querySelector('fieldset');
 const formElements = form.querySelectorAll('fieldset');
 
+export const address = document.querySelector('#address');
 const mapFilters = document.querySelector('.map__filters');
-let mapFiltersElement = mapFilters.querySelector('select');
-const mapFiltersElements = mapFilters.querySelectorAll('select');
+const mapFiltersSelects = mapFilters.querySelectorAll('select');
 const mapFiltersFieldset = mapFilters.querySelector('fieldset');
 const title = form.querySelector('#title');
 const price = form.querySelector('#price');
@@ -69,8 +71,8 @@ export const disableForm = () => {
     formElement.classList.add('disabled');
   }
 
-  for (mapFiltersElement of mapFiltersElements) {
-    mapFiltersElement.classList.add('disabled');
+  for (const mapFiltersSelect of mapFiltersSelects) {
+    mapFiltersSelect.classList.add('disabled');
   }
 
   mapFiltersFieldset.classList.add('disabled');
@@ -84,10 +86,13 @@ export const enableForm = () => {
     formElement.classList.remove('disabled');
   }
 
-  for (mapFiltersElement of mapFiltersElements) {
-    mapFiltersElement.classList.remove('disabled');
+  for (const mapFiltersSelect of mapFiltersSelects) {
+    mapFiltersSelect.classList.remove('disabled');
   }
 
+  options[0].disabled = true;
+  options[1].disabled = true;
+  options[3].disabled = true;
   mapFiltersFieldset.classList.remove('disabled');
 };
 
@@ -107,14 +112,39 @@ const messageError = () => {
 const messageSuccess = () => {
   const success = successMessage.cloneNode(true);
   document.body.appendChild(success);
+
   document.addEventListener('keydown', (evt) => {
     if (evt.keyCode === 27) {
       document.body.removeChild(success);
+      mapFilters.reset();
+      form.reset();
+      resetMap();
+      getData((data) => {
+        showData(data.slice(0, SIMILAR_DATA_COUNT));
+      });
+      title.value = '';
+      capacity.value = ROOM_FOR_GIESTS[1];
+      room.value = capacity.value;
+      type.value = 'flat';
+      price.value = '';
+      price.placeholder = PRICE_FOR_NIGHT[type.value];
+      price.min = PRICE_FOR_NIGHT[type.value];
+      address.value = `${TOKYO_LG}, ${TOKYO_LN}`;
+      mainPinMarker.setLatLng({
+        lat: 35.67508,
+        lng: 139.73490,
+      });
     }
   });
 
   success.addEventListener('click', () => {
     document.body.removeChild(success);
+    mapFilters.reset();
+    form.reset();
+    resetMap();
+    getData((data) => {
+      showData(data.slice(0, SIMILAR_DATA_COUNT));
+    });
     title.value = '';
     capacity.value = ROOM_FOR_GIESTS[1];
     room.value = capacity.value;
@@ -122,9 +152,10 @@ const messageSuccess = () => {
     price.value = '';
     price.placeholder = PRICE_FOR_NIGHT[type.value];
     price.min = PRICE_FOR_NIGHT[type.value];
+    address.value = `${TOKYO_LG}, ${TOKYO_LN}`;
     mainPinMarker.setLatLng({
-      lat: 35.6895000,
-      lng: 139.6917100,
+      lat: 35.67508,
+      lng: 139.73490,
     });
   });
 };

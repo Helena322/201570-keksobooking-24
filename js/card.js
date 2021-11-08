@@ -16,11 +16,18 @@ export const canvas = document.querySelector('#map-canvas');
 export const getOffer = (data) => {
   card.cloneNode(true);
 
-  const setCardContent = (isCondition, selector, content) => {
-    if (data.author.avatar) {
-      card.querySelector(selector).src = content;
+  const setCardAvatar = (isCondition) => {
+    if (!isCondition) {
+      card.querySelector('.popup__avatar').classList.add('hidden');
       return;
     }
+    if (card.querySelector('.popup__avatar').classList.contains('hidden')) {
+      card.querySelector('.popup__avatar').classList.remove('hidden');
+    }
+    card.querySelector('.popup__avatar').src = isCondition;
+  };
+
+  const setCardContent = (isCondition, selector, content) => {
     if (!isCondition) {
       card.querySelector(selector).classList.add('hidden');
       return;
@@ -31,7 +38,7 @@ export const getOffer = (data) => {
     card.querySelector(selector).textContent = content;
   };
 
-  setCardContent(data.author.avatar, '.popup__avatar', data.author.avatar);
+  setCardAvatar(data.author.avatar);
   setCardContent(data.offer.title, '.popup__title', data.offer.title);
   setCardContent(data.offer.address, '.popup__text--address', data.offer.address);
   setCardContent(data.offer.price, '.popup__text--price', data.offer.price);

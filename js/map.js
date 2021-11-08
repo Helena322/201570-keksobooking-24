@@ -1,9 +1,9 @@
 import {getOffer} from './card.js';
-import {enableForm} from './form.js';
+import {enableForm, address} from './form.js';
+
 export const TOKYO_LG = 35.6895000;
 export const TOKYO_LN = 139.6917100;
-export const adress = document.querySelector('#address');
-adress.value = `${TOKYO_LG}, ${TOKYO_LN}`;
+address.value = `${TOKYO_LG}, ${TOKYO_LN}`;
 
 export const map = L.map('map-canvas')
   .on('load', () => {
@@ -11,8 +11,8 @@ export const map = L.map('map-canvas')
   })
 
   .setView({
-    lat: 35.6895000,
-    lng: 139.6917100,
+    lat: 35.67508,
+    lng: 139.73490,
   }, 13);
 
 export const layer = L.tileLayer(
@@ -30,8 +30,8 @@ export const mainPinIcon = L.icon({
 
 export const mainPinMarker = L.marker(
   {
-    lat: 35.6895000,
-    lng: 139.6917100,
+    lat: 35.67508,
+    lng: 139.73490,
   },
 
   {
@@ -43,9 +43,11 @@ export const mainPinMarker = L.marker(
 mainPinMarker.addTo(map);
 
 mainPinMarker.on('moveend', (evt) => {
-  const lll = evt.target.getLatLng();
-  adress.value = `${lll.lat.toFixed(5)} ${lll.lng.toFixed(5)}`;
+  const coordinatesOfPlace = evt.target.getLatLng();
+  address.value = `${coordinatesOfPlace.lat.toFixed(5)} ${coordinatesOfPlace.lng.toFixed(5)}`;
 });
+
+const markerGroup = L.layerGroup().addTo(map);
 
 const showData = ((data) => {
   data.forEach((point) => {
@@ -56,7 +58,7 @@ const showData = ((data) => {
     const icon = L.icon({
       iconUrl: '../img/pin.svg',
       iconSize: [40, 40],
-      iconAnchor: [26, 52],
+      iconAnchor: [20, 40],
     });
     const marker = L.marker(
       {
@@ -69,9 +71,13 @@ const showData = ((data) => {
     );
 
     marker
-      .addTo(map)
+      .addTo(markerGroup)
       .bindPopup(() => getOffer(point));
   });
 });
 
-export { showData };
+const resetMap = () => {
+  markerGroup.clearLayers();
+};
+
+export {showData, resetMap};
