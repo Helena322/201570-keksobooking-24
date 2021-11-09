@@ -27,9 +27,11 @@ fileChooserPhoto.addEventListener('change', () => {
   ));
 
   if (matches) {
-    previewPhoto.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
-    previewPhoto.style.backgroundRepeat = 'no-repeat';
-    previewPhoto.style.backgroundSize = '100%';
+    const photoItem = document.createElement('img');
+    photoItem.width = 70;
+    photoItem.height = 70;
+    photoItem.src = URL.createObjectURL(file);
+    previewPhoto.appendChild(photoItem);
   }
 });
 
