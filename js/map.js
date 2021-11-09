@@ -1,37 +1,36 @@
+import {TOKYO_COORDS} from './model.js';
 import {getOffer} from './card.js';
 import {enableForm, address} from './form.js';
 
-export const TOKYO_LG = 35.6895000;
-export const TOKYO_LN = 139.6917100;
-address.value = `${TOKYO_LG}, ${TOKYO_LN}`;
+address.value = `${TOKYO_COORDS.LG}, ${TOKYO_COORDS.LN}`;
 
-export const map = L.map('map-canvas')
+const map = L.map('map-canvas')
   .on('load', () => {
     enableForm();
   })
 
   .setView({
-    lat: 35.67508,
-    lng: 139.73490,
+    lat: TOKYO_COORDS.LG,
+    lng: TOKYO_COORDS.LN,
   }, 13);
 
-export const layer = L.tileLayer(
+const layer = () => L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 ).addTo(map);
 
-export const mainPinIcon = L.icon({
+const mainPinIcon = L.icon({
   iconUrl: '../img/main-pin.svg',
   iconSize: [52, 52],
   iconAnchor: [26, 52],
 });
 
-export const mainPinMarker = L.marker(
+const mainPinMarker = L.marker(
   {
-    lat: 35.67508,
-    lng: 139.73490,
+    lat: TOKYO_COORDS.LG,
+    lng: TOKYO_COORDS.LN,
   },
 
   {
@@ -80,4 +79,6 @@ const resetMap = () => {
   markerGroup.clearLayers();
 };
 
-export {showData, resetMap};
+layer();
+
+export {mainPinMarker, showData, resetMap};
