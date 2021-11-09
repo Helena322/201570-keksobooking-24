@@ -100,7 +100,7 @@ const messageError = () => {
   const error = errorMessage.cloneNode(true);
   document.body.appendChild(error);
   document.addEventListener('keydown', (evt) => {
-    if (evt.keyCode === 27) {
+    if (evt.key === 'Escape') {
       document.body.removeChild(error);
     }
   });
@@ -114,7 +114,7 @@ const messageSuccess = () => {
   document.body.appendChild(success);
 
   document.addEventListener('keydown', (evt) => {
-    if (evt.keyCode === 27) {
+    if (evt.key === 'Escape') {
       document.body.removeChild(success);
       mapFilters.reset();
       form.reset();

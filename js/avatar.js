@@ -1,10 +1,12 @@
 import {FILE_TYPES} from './model.js';
 
-const fileChooser = document.querySelector('.ad-form__field input[type=file]');
-const preview = document.querySelector('.ad-form-header__preview').querySelector('img');
+const fileChooserAvatar = document.querySelector('.ad-form__field input[type=file]');
+const fileChooserPhoto = document.querySelector('.ad-form__upload input[type=file]');
+const previewAvatar = document.querySelector('.ad-form-header__preview').querySelector('img');
+const previewPhoto = document.querySelector('.ad-form__photo');
 
-fileChooser.addEventListener('change', () => {
-  const file = fileChooser.files[0];
+fileChooserAvatar.addEventListener('change', () => {
+  const file = fileChooserAvatar.files[0];
   const fileName = file.name.toLowerCase();
 
   const matches = FILE_TYPES.some((it) => (
@@ -12,12 +14,29 @@ fileChooser.addEventListener('change', () => {
   ));
 
   if (matches) {
-    preview.src = URL.createObjectURL(file);
+    previewAvatar.src = URL.createObjectURL(file);
+  }
+});
+
+fileChooserPhoto.addEventListener('change', () => {
+  const file = fileChooserPhoto.files[0];
+  const fileName = file.name.toLowerCase();
+
+  const matches = FILE_TYPES.some((it) => (
+    fileName.endsWith(it)
+  ));
+
+  if (matches) {
+    previewPhoto.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
+    previewPhoto.style.backgroundRepeat = 'no-repeat';
+    previewPhoto.style.backgroundSize = '100%';
   }
 });
 
 const clearAvatarImage = () => {
-  preview.src = 'img/muffin-grey.svg';
+  previewAvatar.src = 'img/muffin-grey.svg';
+  previewPhoto.style.backgroundImage = '';
 };
+
 
 export {clearAvatarImage};
