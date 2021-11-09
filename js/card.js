@@ -1,19 +1,12 @@
-export const ACOMMODATION_TYPES = {
-  palace: 'Дворец',
-  flat: 'Квартира',
-  house: 'Дом',
-  bungalow: 'Бунгало',
-  hotel: 'Отель',
-};
+import {ACOMMODATION_TYPES} from './model.js';
 
-export const getType = (type) => (
+const getType = (type) => (
   ACOMMODATION_TYPES[type]
 );
 
-export const card = document.querySelector('#card').content.querySelector('.popup');
-export const canvas = document.querySelector('#map-canvas');
+const card = document.querySelector('#card').content.querySelector('.popup');
 
-export const getOffer = (data) => {
+const getOffer = (data) => {
   card.cloneNode(true);
 
   const setCardAvatar = (isCondition) => {
@@ -87,3 +80,5 @@ export const getOffer = (data) => {
 
   return card;
 };
+
+export {getOffer};

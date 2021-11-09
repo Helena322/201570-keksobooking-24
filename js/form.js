@@ -1,14 +1,14 @@
-import {MIN_TITLE_LENGTH, MAX_TITLE_LENGTH, PRICE_FOR_NIGHT, ROOM_FOR_GIESTS, SIMILAR_DATA_COUNT} from './model.js';
-import {mainPinMarker, TOKYO_LG, TOKYO_LN} from './map.js';
+import {MIN_TITLE_LENGTH, MAX_TITLE_LENGTH, PRICE_FOR_NIGHT, ROOM_FOR_GIESTS, SIMILAR_DATA_COUNT, TOKYO_COORDS} from './model.js';
+import {mainPinMarker} from './map.js';
 import {sendData} from './load.js';
 import {showData, resetMap} from './map.js';
 import {getData} from './load.js';
+import {clearAvatarImage} from './avatar.js';
 
 const form = document.querySelector('.ad-form');
-let formElement = form.querySelector('fieldset');
 const formElements = form.querySelectorAll('fieldset');
 
-export const address = document.querySelector('#address');
+const address = document.querySelector('#address');
 const mapFilters = document.querySelector('.map__filters');
 const mapFiltersSelects = mapFilters.querySelectorAll('select');
 const mapFiltersFieldset = mapFilters.querySelector('fieldset');
@@ -63,11 +63,11 @@ timein.addEventListener('change', () => {
   timeout.value = timein.value;
 });
 
-export const disableForm = () => {
+const disableForm = () => {
   form.classList.add('ad-form--disabled');
   mapFilters.classList.add('map__filters--disabled');
 
-  for (formElement of formElements) {
+  for (const formElement of formElements) {
     formElement.classList.add('disabled');
   }
 
@@ -78,11 +78,11 @@ export const disableForm = () => {
   mapFiltersFieldset.classList.add('disabled');
 };
 
-export const enableForm = () => {
+const enableForm = () => {
   form.classList.remove('ad-form--disabled');
   mapFilters.classList.remove('map__filters--disabled');
 
-  for (formElement of formElements) {
+  for (const formElement of formElements) {
     formElement.classList.remove('disabled');
   }
 
@@ -100,7 +100,7 @@ const messageError = () => {
   const error = errorMessage.cloneNode(true);
   document.body.appendChild(error);
   document.addEventListener('keydown', (evt) => {
-    if (evt.keyCode === 27) {
+    if (evt.key === 'Escape') {
       document.body.removeChild(error);
     }
   });
@@ -114,7 +114,7 @@ const messageSuccess = () => {
   document.body.appendChild(success);
 
   document.addEventListener('keydown', (evt) => {
-    if (evt.keyCode === 27) {
+    if (evt.key === 'Escape') {
       document.body.removeChild(success);
       mapFilters.reset();
       form.reset();
@@ -122,6 +122,7 @@ const messageSuccess = () => {
       getData((data) => {
         showData(data.slice(0, SIMILAR_DATA_COUNT));
       });
+      clearAvatarImage();
       title.value = '';
       capacity.value = ROOM_FOR_GIESTS[1];
       room.value = capacity.value;
@@ -129,10 +130,10 @@ const messageSuccess = () => {
       price.value = '';
       price.placeholder = PRICE_FOR_NIGHT[type.value];
       price.min = PRICE_FOR_NIGHT[type.value];
-      address.value = `${TOKYO_LG}, ${TOKYO_LN}`;
+      address.value = `${TOKYO_COORDS.LG}, ${TOKYO_COORDS.LN}`;
       mainPinMarker.setLatLng({
-        lat: 35.67508,
-        lng: 139.73490,
+        lat: TOKYO_COORDS.LG,
+        lng: TOKYO_COORDS.LN,
       });
     }
   });
@@ -145,6 +146,7 @@ const messageSuccess = () => {
     getData((data) => {
       showData(data.slice(0, SIMILAR_DATA_COUNT));
     });
+    clearAvatarImage();
     title.value = '';
     capacity.value = ROOM_FOR_GIESTS[1];
     room.value = capacity.value;
@@ -152,10 +154,10 @@ const messageSuccess = () => {
     price.value = '';
     price.placeholder = PRICE_FOR_NIGHT[type.value];
     price.min = PRICE_FOR_NIGHT[type.value];
-    address.value = `${TOKYO_LG}, ${TOKYO_LN}`;
+    address.value = `${TOKYO_COORDS.LG}, ${TOKYO_COORDS.LN}`;
     mainPinMarker.setLatLng({
-      lat: 35.67508,
-      lng: 139.73490,
+      lat: TOKYO_COORDS.LG,
+      lng: TOKYO_COORDS.LN,
     });
   });
 };
@@ -170,3 +172,5 @@ form.addEventListener('submit', (evt) => {
 });
 
 disableForm();
+
+export {address, enableForm};
