@@ -1,5 +1,5 @@
 import {FILE_TYPES} from './model.js';
-import {avatarSrc} from './messages.js';
+import {AVATAR_SRC} from './constants.js';
 
 const fileChooserAvatar = document.querySelector('.ad-form__field input[type=file]');
 const fileChooserPhoto = document.querySelector('.ad-form__upload input[type=file]');
@@ -37,7 +37,7 @@ fileChooserPhoto.addEventListener('change', () => {
 });
 
 const clearAvatarImage = () => {
-  previewAvatar.src = avatarSrc;
+  previewAvatar.src = AVATAR_SRC;
   while (previewPhoto.lastElementChild) {
     previewPhoto.removeChild(previewPhoto.lastElementChild);
   }
