@@ -23,7 +23,7 @@ const sendData = (onSuccess, onFail, body) => {
   )
     .then((response) => {
       if (!response.ok) {
-        throw Error('Ошибка')
+        throw Error('Ошибка');
       }
       onSuccess();
     })
