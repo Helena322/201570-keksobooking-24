@@ -1,9 +1,8 @@
 import {SIMILAR_DATA_COUNT} from './constants.js';
 import {titleMinKey, titleMaxKey} from './messages.js';
 import {TITLE_LENGTH, PRICE_FOR_NIGHT, ROOM_FOR_GIESTS, TOKYO_COORDS, HOUSING_TYPES} from './model.js';
-import {mainPinMarker} from './map.js';
+import {mainPinMarker, map, showData, resetMap} from './map.js';
 import {sendData, getData} from './request.js';
-import {showData, resetMap} from './map.js';
 import {clearAvatarImage} from './avatar.js';
 
 const form = document.querySelector('.ad-form');
@@ -132,6 +131,10 @@ const messageSuccess = () => {
     lat: TOKYO_COORDS.LG,
     lng: TOKYO_COORDS.LN,
   });
+  map.setView({
+    lat: TOKYO_COORDS.LG,
+    lng: TOKYO_COORDS.LN,
+  }, 13);
 
   document.addEventListener('keydown', (evt) => {
     if (evt.key === 'Escape') {
