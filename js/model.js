@@ -66,3 +66,5 @@ export const SHOW_STATES = Object.freeze({
   hidden: 'hidden',
   disabled: 'disabled',
 });
+
+export const FILE_TYPES = ['webp', 'jpg', 'jpeg', 'png'];

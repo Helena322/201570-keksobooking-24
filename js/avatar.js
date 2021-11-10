@@ -1,4 +1,5 @@
-import {FILE_TYPES, avatarSrc} from './constants.js';
+import {FILE_TYPES} from './model.js';
+import {avatarSrc} from './messages.js';
 
 const fileChooserAvatar = document.querySelector('.ad-form__field input[type=file]');
 const fileChooserPhoto = document.querySelector('.ad-form__upload input[type=file]');

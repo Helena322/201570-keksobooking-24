@@ -1,9 +1,9 @@
-import {SIMILAR_DATA_COUNT, titleMinKey, titleMaxKey} from './constants.js';
+import {SIMILAR_DATA_COUNT} from './constants.js';
+import {titleMinKey, titleMaxKey} from './messages.js';
 import {TITLE_LENGTH, PRICE_FOR_NIGHT, ROOM_FOR_GIESTS, TOKYO_COORDS, HOUSING_TYPES} from './model.js';
 import {mainPinMarker} from './map.js';
-import {sendData} from './load.js';
+import {sendData, getData} from './request.js';
 import {showData, resetMap} from './map.js';
-import {getData} from './load.js';
 import {clearAvatarImage} from './avatar.js';
 
 const form = document.querySelector('.ad-form');

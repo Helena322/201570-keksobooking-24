@@ -1,5 +1,5 @@
 import {showData, resetMap} from './map.js';
-import {SIMILAR_DATA_COUNT, DEFAULT_GUEST_ZERO, DEFAULT_ANY} from './constants.js';
+import {SIMILAR_DATA_COUNT, DEFAULT_GUEST_ZERO, DEFAULT_ANY, TIME_OUT_DELAY} from './constants.js';
 import {PRICE, FILTER_TYPES} from './model.js';
 
 const mapFilters = document.querySelector('.map__filters');
@@ -10,7 +10,7 @@ const rooms = mapFilters.querySelector('[name="housing-rooms"]');
 const guests = mapFilters.querySelector('[name="housing-guests"]');
 const feature = mapFilters.querySelectorAll('[name="features"]');
 
-const getFilteredData = (_.debounce((data) => {
+const initFilter = (_.debounce((data) => {
   const dataList = data;
 
   const getFilterValue = (filterElement) => {
@@ -64,6 +64,6 @@ const getFilteredData = (_.debounce((data) => {
     getFilterValue(element);
   });
 
-}, 500));
+}, TIME_OUT_DELAY));
 
-export {getFilteredData};
+export {initFilter};

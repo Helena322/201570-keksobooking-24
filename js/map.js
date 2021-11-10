@@ -1,6 +1,7 @@
 import {TOKYO_COORDS, MAIN_PIN_MARKER, MAIN_PIN_ICON} from './model.js';
 import {getOffer} from './card.js';
 import {enableForm, address} from './form.js';
+import {reference} from './messages.js';
 
 address.value = `${TOKYO_COORDS.LG}, ${TOKYO_COORDS.LN}`;
 
@@ -15,7 +16,7 @@ const map = L.map('map-canvas')
   }, 13);
 
 const layer = () => L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  reference,
   {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
