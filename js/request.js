@@ -1,5 +1,5 @@
-import {postMethod} from './constants.js';
-import {API, formFailKey} from './messages.js';
+import {API, POST_METHOD} from './constants.js';
+import {formFailKey} from './messages.js';
 import {showAlert} from './util.js';
 
 const getData = (onSuccess) => {
@@ -17,7 +17,7 @@ const sendData = (onSuccess, onFail, body) => {
   fetch(
     API,
     {
-      method: postMethod,
+      method: POST_METHOD,
       body,
     },
   )
