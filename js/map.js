@@ -82,4 +82,4 @@ const resetMap = () => {
 
 layer();
 
-export {mainPinMarker, showData, resetMap};
+export {mainPinMarker, showData, resetMap, map};
