@@ -1,5 +1,6 @@
 import {showData, resetMap} from './map.js';
-import {SIMILAR_DATA_COUNT, RERENDER_DELAY, PRICE, DEFAULT_GUEST_ZERO, DEFAULT_ANY} from './model.js';
+import {SIMILAR_DATA_COUNT, DEFAULT_GUEST_ZERO, DEFAULT_ANY, TIME_OUT_DELAY} from './constants.js';
+import {PRICE, FILTER_TYPES} from './model.js';
 
 const mapFilters = document.querySelector('.map__filters');
 const filters = mapFilters.querySelectorAll('select');
@@ -9,7 +10,7 @@ const rooms = mapFilters.querySelector('[name="housing-rooms"]');
 const guests = mapFilters.querySelector('[name="housing-guests"]');
 const feature = mapFilters.querySelectorAll('[name="features"]');
 
-const getFilter = (_.debounce((data) => {
+const initFilter = (_.debounce((data) => {
   const dataList = data;
 
   const getFilterValue = (filterElement) => {
@@ -35,11 +36,11 @@ const getFilter = (_.debounce((data) => {
       );
 
       const filteredPrice = () => {
-        if (price.value === 'low') {
+        if (price.value === FILTER_TYPES.low) {
           return filteredRooms().filter((elementOfDada) => elementOfDada.offer.price < PRICE.min);
-        } else if (price.value === 'middle') {
+        } else if (price.value === FILTER_TYPES.middle) {
           return filteredRooms().filter((elementOfDada) => elementOfDada.offer.price >= PRICE.min && elementOfDada.offer.price <= PRICE.middle);
-        } else if (price.value === 'high') {
+        } else if (price.value === FILTER_TYPES.high) {
           return filteredRooms().filter((elementOfDada) => elementOfDada.offer.price > PRICE.middle || price.value === DEFAULT_ANY);
         } else if (price.value === DEFAULT_ANY) {
           return filteredRooms();
@@ -63,6 +64,6 @@ const getFilter = (_.debounce((data) => {
     getFilterValue(element);
   });
 
-}, RERENDER_DELAY));
+}, TIME_OUT_DELAY));
 
-export {getFilter};
+export {initFilter};
