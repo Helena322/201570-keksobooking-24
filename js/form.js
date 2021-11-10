@@ -1,4 +1,5 @@
-import {MIN_TITLE_LENGTH, MAX_TITLE_LENGTH, PRICE_FOR_NIGHT, ROOM_FOR_GIESTS, SIMILAR_DATA_COUNT, TOKYO_COORDS} from './model.js';
+import {SIMILAR_DATA_COUNT, titleMinKey, titleMaxKey} from './constants.js';
+import {TITLE_LENGTH, PRICE_FOR_NIGHT, ROOM_FOR_GIESTS, TOKYO_COORDS, HOUSING_TYPES} from './model.js';
 import {mainPinMarker} from './map.js';
 import {sendData} from './load.js';
 import {showData, resetMap} from './map.js';
@@ -28,10 +29,10 @@ price.placeholder = PRICE_FOR_NIGHT[type.value];
 price.min = PRICE_FOR_NIGHT[type.value];
 
 title.oninput = () => {
-  if (title.value.length < MIN_TITLE_LENGTH) {
-    title.setCustomValidity('Заголовок меньше 30 символов.');
-  } else if (title.value.length > MAX_TITLE_LENGTH) {
-    title.setCustomValidity('Заголовок не должен превышать 100 символов.');
+  if (title.value.length < TITLE_LENGTH.MIN) {
+    title.setCustomValidity(titleMinKey);
+  } else if (title.value.length > TITLE_LENGTH.MAX) {
+    title.setCustomValidity(titleMaxKey);
   } else {
     title.setCustomValidity('');
   }
@@ -112,53 +113,34 @@ const messageError = () => {
 const messageSuccess = () => {
   const success = successMessage.cloneNode(true);
   document.body.appendChild(success);
+  mapFilters.reset();
+  form.reset();
+  resetMap();
+  getData((data) => {
+    showData(data.slice(0, SIMILAR_DATA_COUNT));
+  });
+  clearAvatarImage();
+  title.value = '';
+  capacity.value = ROOM_FOR_GIESTS[1];
+  room.value = capacity.value;
+  type.value = HOUSING_TYPES.flat;
+  price.value = '';
+  price.placeholder = PRICE_FOR_NIGHT[type.value];
+  price.min = PRICE_FOR_NIGHT[type.value];
+  address.value = `${TOKYO_COORDS.LG}, ${TOKYO_COORDS.LN}`;
+  mainPinMarker.setLatLng({
+    lat: TOKYO_COORDS.LG,
+    lng: TOKYO_COORDS.LN,
+  });
 
   document.addEventListener('keydown', (evt) => {
     if (evt.key === 'Escape') {
       document.body.removeChild(success);
-      mapFilters.reset();
-      form.reset();
-      resetMap();
-      getData((data) => {
-        showData(data.slice(0, SIMILAR_DATA_COUNT));
-      });
-      clearAvatarImage();
-      title.value = '';
-      capacity.value = ROOM_FOR_GIESTS[1];
-      room.value = capacity.value;
-      type.value = 'flat';
-      price.value = '';
-      price.placeholder = PRICE_FOR_NIGHT[type.value];
-      price.min = PRICE_FOR_NIGHT[type.value];
-      address.value = `${TOKYO_COORDS.LG}, ${TOKYO_COORDS.LN}`;
-      mainPinMarker.setLatLng({
-        lat: TOKYO_COORDS.LG,
-        lng: TOKYO_COORDS.LN,
-      });
     }
   });
 
   success.addEventListener('click', () => {
     document.body.removeChild(success);
-    mapFilters.reset();
-    form.reset();
-    resetMap();
-    getData((data) => {
-      showData(data.slice(0, SIMILAR_DATA_COUNT));
-    });
-    clearAvatarImage();
-    title.value = '';
-    capacity.value = ROOM_FOR_GIESTS[1];
-    room.value = capacity.value;
-    type.value = 'flat';
-    price.value = '';
-    price.placeholder = PRICE_FOR_NIGHT[type.value];
-    price.min = PRICE_FOR_NIGHT[type.value];
-    address.value = `${TOKYO_COORDS.LG}, ${TOKYO_COORDS.LN}`;
-    mainPinMarker.setLatLng({
-      lat: TOKYO_COORDS.LG,
-      lng: TOKYO_COORDS.LN,
-    });
   });
 };
 

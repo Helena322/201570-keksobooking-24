@@ -1,9 +1,9 @@
-import {SIMILAR_DATA_COUNT} from './model.js';
+import {SIMILAR_DATA_COUNT} from './constants.js';
 import {showData} from './map.js';
 import {getData} from './load.js';
-import {getFilter} from './filter.js';
+import {getFilteredData} from './filter.js';
 
 getData((data) => {
   showData(data.slice(0, SIMILAR_DATA_COUNT));
-  getFilter(data);
+  getFilteredData(data);
 });

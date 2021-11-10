@@ -1,0 +1,11 @@
+export const SIMILAR_DATA_COUNT = 10;
+export const FILE_TYPES = ['webp', 'jpg', 'jpeg', 'png'];
+export const DEFAULT_ANY = 'any';
+export const DEFAULT_GUEST_ZERO = 0;
+export const reference = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+export const API = 'https://24.javascript.pages.academy/keksobooking';
+export const formFailKey = 'Не удалось отправить форму. Попробуйте ещё раз';
+export const titleMinKey = 'Заголовок меньше 30 символов.';
+export const titleMaxKey = 'Заголовок не должен превышать 100 символов.';
+export const avatarSrc = 'img/muffin-grey.svg';
+export const timeoutDelay = 500;

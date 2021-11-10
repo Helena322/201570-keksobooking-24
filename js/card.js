@@ -1,32 +1,33 @@
-import {ACOMMODATION_TYPES} from './model.js';
+import {ACOMMODATION_TYPES, SHOW_STATES} from './model.js';
 
 const getType = (type) => (
   ACOMMODATION_TYPES[type]
 );
 
 const card = document.querySelector('#card').content.querySelector('.popup');
+const avatar = card.querySelector('.popup__avatar');
 
 const getOffer = (data) => {
   card.cloneNode(true);
 
   const setCardAvatar = (isCondition) => {
     if (!isCondition) {
-      card.querySelector('.popup__avatar').classList.add('hidden');
+      avatar.classList.add(SHOW_STATES.hidden);
       return;
     }
-    if (card.querySelector('.popup__avatar').classList.contains('hidden')) {
-      card.querySelector('.popup__avatar').classList.remove('hidden');
+    if (avatar.classList.contains(SHOW_STATES.hidden)) {
+      avatar.classList.remove(SHOW_STATES.hidden);
     }
-    card.querySelector('.popup__avatar').src = isCondition;
+    avatar.src = isCondition;
   };
 
   const setCardContent = (isCondition, selector, content) => {
     if (!isCondition) {
-      card.querySelector(selector).classList.add('hidden');
+      card.querySelector(selector).classList.add(SHOW_STATES.hidden);
       return;
     }
-    if (card.querySelector(selector).classList.contains('hidden')) {
-      card.querySelector(selector).classList.remove('hidden');
+    if (card.querySelector(selector).classList.contains(SHOW_STATES.hidden)) {
+      card.querySelector(selector).classList.remove(SHOW_STATES.hidden);
     }
     card.querySelector(selector).textContent = content;
   };
@@ -41,10 +42,10 @@ const getOffer = (data) => {
   setCardContent(data.offer.description, '.popup__description', data.offer.description);
 
   if (!data.offer.features) {
-    card.querySelector('.popup__features').classList.add('hidden');
+    card.querySelector('.popup__features').classList.add(SHOW_STATES.hidden);
   } else {
-    if (card.querySelector('.popup__photos').classList.contains('hidden')) {
-      card.querySelector('.popup__features').classList.remove('hidden');
+    if (card.querySelector('.popup__photos').classList.contains(SHOW_STATES.hidden)) {
+      card.querySelector('.popup__features').classList.remove(SHOW_STATES.hidden);
     }
     const features = data.offer.features;
     const feature = card.querySelector('.popup__features');
@@ -59,10 +60,10 @@ const getOffer = (data) => {
   }
 
   if (!data.offer.photos) {
-    card.querySelector('.popup__photos').classList.add('hidden');
+    card.querySelector('.popup__photos').classList.add(SHOW_STATES.hidden);
   } else {
-    if (card.querySelector('.popup__photos').classList.contains('hidden')) {
-      card.querySelector('.popup__photos').classList.remove('hidden');
+    if (card.querySelector('.popup__photos').classList.contains(SHOW_STATES.hidden)) {
+      card.querySelector('.popup__photos').classList.remove(SHOW_STATES.hidden);
     }
     const photos = data.offer.photos;
     const photo = card.querySelector('.popup__photos');

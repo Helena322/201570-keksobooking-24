@@ -1,4 +1,4 @@
-import {FILE_TYPES} from './model.js';
+import {FILE_TYPES, avatarSrc} from './constants.js';
 
 const fileChooserAvatar = document.querySelector('.ad-form__field input[type=file]');
 const fileChooserPhoto = document.querySelector('.ad-form__upload input[type=file]');
@@ -36,9 +36,10 @@ fileChooserPhoto.addEventListener('change', () => {
 });
 
 const clearAvatarImage = () => {
-  previewAvatar.src = 'img/muffin-grey.svg';
-  previewPhoto.style.backgroundImage = '';
+  previewAvatar.src = avatarSrc;
+  while (previewPhoto.lastElementChild) {
+    previewPhoto.removeChild(previewPhoto.lastElementChild);
+  }
 };
-
 
 export {clearAvatarImage};

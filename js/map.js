@@ -1,4 +1,4 @@
-import {TOKYO_COORDS} from './model.js';
+import {TOKYO_COORDS, MAIN_PIN_MARKER, MAIN_PIN_ICON} from './model.js';
 import {getOffer} from './card.js';
 import {enableForm, address} from './form.js';
 
@@ -22,9 +22,9 @@ const layer = () => L.tileLayer(
 ).addTo(map);
 
 const mainPinIcon = L.icon({
-  iconUrl: '../img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
+  iconUrl: MAIN_PIN_MARKER.URL,
+  iconSize: MAIN_PIN_MARKER.WIDTH,
+  iconAnchor: MAIN_PIN_MARKER.HEIGHT,
 });
 
 const mainPinMarker = L.marker(
@@ -55,9 +55,9 @@ const showData = ((data) => {
     const lng = point.location.lng;
 
     const icon = L.icon({
-      iconUrl: '../img/pin.svg',
-      iconSize: [40, 40],
-      iconAnchor: [20, 40],
+      iconUrl: MAIN_PIN_ICON.URL,
+      iconSize: MAIN_PIN_ICON.WIDTH,
+      iconAnchor: MAIN_PIN_ICON.HEIGHT,
     });
     const marker = L.marker(
       {

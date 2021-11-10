@@ -1,5 +1,7 @@
+import {API, formFailKey} from './constants.js';
+
 const getData = (onSuccess) => {
-  fetch('https://24.javascript.pages.academy/keksobooking/data')
+  fetch(`${API}/data`)
     .then((response) => response.json())
     .then((data) => {
       onSuccess(data);
@@ -8,7 +10,7 @@ const getData = (onSuccess) => {
 
 const sendData = (onSuccess, onFail, body) => {
   fetch(
-    'https://24.javascript.pages.academy/keksobooking',
+    API,
     {
       method: 'POST',
       body,
@@ -17,12 +19,10 @@ const sendData = (onSuccess, onFail, body) => {
     .then((response) => {
       if (response.ok) {
         onSuccess();
-      } else {
-        onFail('Не удалось отправить форму. Попробуйте ещё раз');
       }
     })
     .catch(() => {
-      onFail('Не удалось отправить форму. Попробуйте ещё раз');
+      onFail(formFailKey);
     });
 };
 
