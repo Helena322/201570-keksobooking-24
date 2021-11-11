@@ -45,18 +45,17 @@ type.onchange = () => {
 
 room.onchange = () => {
   const values = Object.values(ROOM_FOR_GIESTS[room.value]);
-
   options.forEach((option) => {
     option.disabled = true;
   });
 
   options.forEach((option) => {
-    for (let i = 0; i < room.value; i++) {
-      if (Number(option.value) === values[i]) {
+    values.forEach((element) => {
+      if (element === Number(option.value)) {
         option.disabled = false;
         capacity.value = option.value;
       }
-    }
+    });
   });
 };
 

@@ -3,8 +3,6 @@ import {getOffer} from './card.js';
 import {enableForm, address} from './form.js';
 import {REFERENCE, MAP_ZOOM} from './constants.js';
 
-
-
 const map = L.map('map-canvas')
   .on('load', () => {
     address.value = `${TOKYO_COORDS.LG}, ${TOKYO_COORDS.LN}`;
