@@ -4,6 +4,7 @@ export const DEFAULT_GUEST_ZERO = 0;
 export const TIME_OUT_DELAY = 500;
 export const ALERT_SHOW_TIME = 5000;
 export const POST_METHOD = 'POST';
+export const MAP_ZOOM = '13';
 export const AVATAR_SRC = 'img/muffin-grey.svg';
 export const REFERENCE = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 export const API = 'https://24.javascript.pages.academy/keksobooking';

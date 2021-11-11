@@ -1,19 +1,18 @@
 import {TOKYO_COORDS, MAIN_PIN_MARKER, MAIN_PIN_ICON} from './model.js';
 import {getOffer} from './card.js';
 import {enableForm, address} from './form.js';
-import {REFERENCE} from './constants.js';
+import {REFERENCE, MAP_ZOOM} from './constants.js';
 
-address.value = `${TOKYO_COORDS.LG}, ${TOKYO_COORDS.LN}`;
+
 
 const map = L.map('map-canvas')
   .on('load', () => {
-    enableForm();
+    address.value = `${TOKYO_COORDS.LG}, ${TOKYO_COORDS.LN}`;
   })
-
   .setView({
     lat: TOKYO_COORDS.LG,
     lng: TOKYO_COORDS.LN,
-  }, 13);
+  }, MAP_ZOOM);
 
 const layer = () => L.tileLayer(
   REFERENCE,
@@ -74,6 +73,7 @@ const showData = ((data) => {
       .addTo(markerGroup)
       .bindPopup(() => getOffer(point));
   });
+  enableForm();
 });
 
 const resetMap = () => {

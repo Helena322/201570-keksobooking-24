@@ -1,4 +1,4 @@
-import {SIMILAR_DATA_COUNT} from './constants.js';
+import {SIMILAR_DATA_COUNT, MAP_ZOOM} from './constants.js';
 import {titleMinKey, titleMaxKey} from './messages.js';
 import {TITLE_LENGTH, PRICE_FOR_NIGHT, ROOM_FOR_GIESTS, TOKYO_COORDS, HOUSING_TYPES} from './model.js';
 import {mainPinMarker, map, showData, resetMap} from './map.js';
@@ -22,6 +22,7 @@ const timein = form.querySelector('#timein');
 const timeout = form.querySelector('#timeout');
 const successMessage = document.querySelector('#success').content.querySelector('.success');
 const errorMessage = document.querySelector('#error').content.querySelector('.error');
+const reset = document.querySelector('.ad-form__reset');
 
 capacity.value = ROOM_FOR_GIESTS[1];
 price.placeholder = PRICE_FOR_NIGHT[type.value];
@@ -96,7 +97,7 @@ const enableForm = () => {
   mapFiltersFieldset.classList.remove('disabled');
 };
 
-const messageError = () => {
+const getMessageError = () => {
   const error = errorMessage.cloneNode(true);
   document.body.appendChild(error);
   document.addEventListener('keydown', (evt) => {
@@ -109,7 +110,7 @@ const messageError = () => {
   });
 };
 
-const messageSuccess = () => {
+const getMessageSuccess = () => {
   const success = successMessage.cloneNode(true);
   document.body.appendChild(success);
   mapFilters.reset();
@@ -134,7 +135,7 @@ const messageSuccess = () => {
   map.setView({
     lat: TOKYO_COORDS.LG,
     lng: TOKYO_COORDS.LN,
-  }, 13);
+  }, MAP_ZOOM);
 
   document.addEventListener('keydown', (evt) => {
     if (evt.key === 'Escape') {
@@ -150,10 +151,37 @@ const messageSuccess = () => {
 form.addEventListener('submit', (evt) => {
   evt.preventDefault();
   sendData(
-    () => messageSuccess(),
-    () => messageError(),
+    () => getMessageSuccess(),
+    () => getMessageError(),
     new FormData(evt.target),
   );
+});
+
+reset.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  mapFilters.reset();
+  form.reset();
+  resetMap();
+  getData((data) => {
+    showData(data.slice(0, SIMILAR_DATA_COUNT));
+  });
+  clearAvatarImage();
+  title.value = '';
+  capacity.value = ROOM_FOR_GIESTS[1];
+  room.value = capacity.value;
+  type.value = HOUSING_TYPES.flat;
+  price.value = '';
+  price.placeholder = PRICE_FOR_NIGHT[type.value];
+  price.min = PRICE_FOR_NIGHT[type.value];
+  address.value = `${TOKYO_COORDS.LG}, ${TOKYO_COORDS.LN}`;
+  mainPinMarker.setLatLng({
+    lat: TOKYO_COORDS.LG,
+    lng: TOKYO_COORDS.LN,
+  });
+  map.setView({
+    lat: TOKYO_COORDS.LG,
+    lng: TOKYO_COORDS.LN,
+  }, MAP_ZOOM);
 });
 
 disableForm();

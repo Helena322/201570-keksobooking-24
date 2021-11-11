@@ -17,7 +17,7 @@ const initFilter = (_.debounce((data) => {
     filterElement.onchange = () => {
       resetMap();
 
-      const filtereCheckBoxes = () => {
+      const getFiltereCheckBoxes = () => {
         const featuresChecked = document.querySelectorAll('[name="features"]:checked');
         const checkedValues = Array.from(featuresChecked).map((checkBoxElement) => checkBoxElement.value);
         return dataList.filter((elementOfDada) => {
@@ -27,31 +27,31 @@ const initFilter = (_.debounce((data) => {
         });
       };
 
-      const filteredGuests = () => (
-        filtereCheckBoxes().filter((elementOfDada) => elementOfDada.offer.guests === Number(guests.value) || guests.value === DEFAULT_ANY || guests.value === DEFAULT_GUEST_ZERO)
+      const getFilteredGuests = () => (
+        getFiltereCheckBoxes().filter((elementOfDada) => elementOfDada.offer.guests === Number(guests.value) || guests.value === DEFAULT_ANY || guests.value === DEFAULT_GUEST_ZERO)
       );
 
-      const filteredRooms = () => (
-        filteredGuests().filter((elementOfDada) => elementOfDada.offer.rooms === Number(rooms.value) || rooms.value === DEFAULT_ANY)
+      const getFilteredRooms = () => (
+        getFilteredGuests().filter((elementOfDada) => elementOfDada.offer.rooms === Number(rooms.value) || rooms.value === DEFAULT_ANY)
       );
 
-      const filteredPrice = () => {
+      const getFilteredPrice = () => {
         if (price.value === FILTER_TYPES.low) {
-          return filteredRooms().filter((elementOfDada) => elementOfDada.offer.price < PRICE.min);
+          return getFilteredRooms().filter((elementOfDada) => elementOfDada.offer.price < PRICE.min);
         } else if (price.value === FILTER_TYPES.middle) {
-          return filteredRooms().filter((elementOfDada) => elementOfDada.offer.price >= PRICE.min && elementOfDada.offer.price <= PRICE.middle);
+          return getFilteredRooms().filter((elementOfDada) => elementOfDada.offer.price >= PRICE.min && elementOfDada.offer.price <= PRICE.middle);
         } else if (price.value === FILTER_TYPES.high) {
-          return filteredRooms().filter((elementOfDada) => elementOfDada.offer.price > PRICE.middle || price.value === DEFAULT_ANY);
+          return getFilteredRooms().filter((elementOfDada) => elementOfDada.offer.price > PRICE.middle || price.value === DEFAULT_ANY);
         } else if (price.value === DEFAULT_ANY) {
-          return filteredRooms();
+          return getFilteredRooms();
         }
       };
 
-      const filteredType = () => (
-        filteredPrice().filter((elementOfDada) => elementOfDada.offer.type === type.value || type.value === DEFAULT_ANY)
+      const getFilteredType = () => (
+        getFilteredPrice().filter((elementOfDada) => elementOfDada.offer.type === type.value || type.value === DEFAULT_ANY)
       );
 
-      showData(filteredType().slice(0, SIMILAR_DATA_COUNT));
+      showData(getFilteredType().slice(0, SIMILAR_DATA_COUNT));
     };
 
   };
