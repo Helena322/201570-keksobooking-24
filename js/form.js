@@ -127,14 +127,6 @@ const getMessageSuccess = () => {
   price.placeholder = PRICE_FOR_NIGHT[type.value];
   price.min = PRICE_FOR_NIGHT[type.value];
   address.value = `${TOKYO_COORDS.LG}, ${TOKYO_COORDS.LN}`;
-  mainPinMarker.setLatLng({
-    lat: TOKYO_COORDS.LG,
-    lng: TOKYO_COORDS.LN,
-  });
-  map.setView({
-    lat: TOKYO_COORDS.LG,
-    lng: TOKYO_COORDS.LN,
-  }, MAP_ZOOM);
 
   document.addEventListener('keydown', (evt) => {
     if (evt.key === 'Escape') {
@@ -173,14 +165,6 @@ reset.addEventListener('click', (evt) => {
   price.placeholder = PRICE_FOR_NIGHT[type.value];
   price.min = PRICE_FOR_NIGHT[type.value];
   address.value = `${TOKYO_COORDS.LG}, ${TOKYO_COORDS.LN}`;
-  mainPinMarker.setLatLng({
-    lat: TOKYO_COORDS.LG,
-    lng: TOKYO_COORDS.LN,
-  });
-  map.setView({
-    lat: TOKYO_COORDS.LG,
-    lng: TOKYO_COORDS.LN,
-  }, MAP_ZOOM);
 });
 
 disableForm();

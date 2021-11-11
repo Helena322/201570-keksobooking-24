@@ -1,4 +1,4 @@
-import {showData, resetMap} from './map.js';
+import {showData, resetMarkersGroups} from './map.js';
 import {SIMILAR_DATA_COUNT, DEFAULT_GUEST_ZERO, DEFAULT_ANY, TIME_OUT_DELAY} from './constants.js';
 import {PRICE, FILTER_TYPES} from './model.js';
 
@@ -15,7 +15,7 @@ const initFilter = (_.debounce((data) => {
 
   const getFilterValue = (filterElement) => {
     filterElement.onchange = () => {
-      resetMap();
+      resetMarkersGroups ();
 
       const getFiltereCheckBoxes = () => {
         const featuresChecked = document.querySelectorAll('[name="features"]:checked');

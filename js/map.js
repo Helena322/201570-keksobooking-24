@@ -74,10 +74,22 @@ const showData = ((data) => {
   enableForm();
 });
 
-const resetMap = () => {
+const resetMarkersGroups = () => {
   markerGroup.clearLayers();
+};
+
+const resetMap = () => {
+  resetMarkersGroups();
+  mainPinMarker.setLatLng({
+    lat: TOKYO_COORDS.LG,
+    lng: TOKYO_COORDS.LN,
+  });
+  map.setView({
+    lat: TOKYO_COORDS.LG,
+    lng: TOKYO_COORDS.LN,
+  }, MAP_ZOOM);
 };
 
 layer();
 
-export {mainPinMarker, showData, resetMap, map};
+export {mainPinMarker, showData, resetMap, map, resetMarkersGroups};
