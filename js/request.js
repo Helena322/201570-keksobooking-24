@@ -1,6 +1,6 @@
 import {API, POST_METHOD} from './constants.js';
 import {formFailKey} from './messages.js';
-import {showAlert} from './util.js';
+import {showAlert} from './utils.js';
 
 const getData = (onSuccess) => {
   fetch(`${API}/data`)

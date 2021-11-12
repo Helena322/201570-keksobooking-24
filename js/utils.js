@@ -1,6 +1,6 @@
 import {ALERT_SHOW_TIME} from './constants.js';
 
-const debounce = (callback, timeoutDelay) => {
+const debounce = (callback, timeoutDelay = 500) => {
   let timeoutId;
 
   return (...rest) => {

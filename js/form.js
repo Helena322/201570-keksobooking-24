@@ -1,7 +1,7 @@
-import {SIMILAR_DATA_COUNT, MAP_ZOOM} from './constants.js';
+import {SIMILAR_DATA_COUNT} from './constants.js';
 import {titleMinKey, titleMaxKey} from './messages.js';
 import {TITLE_LENGTH, PRICE_FOR_NIGHT, ROOM_FOR_GIESTS, TOKYO_COORDS, HOUSING_TYPES} from './model.js';
-import {mainPinMarker, map, showData, resetMap} from './map.js';
+import {showData, resetMap} from './map.js';
 import {sendData, getData} from './request.js';
 import {clearAvatarImage} from './avatar.js';
 
