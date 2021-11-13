@@ -103,13 +103,13 @@ const getMessageError = () => {
   const removeErrorWarning = () => {
     document.removeEventListener('keydown', onKeydown);
     document.body.removeChild(error);
-  }
+  };
 
   const onKeydown = ({key}) => {
     if (key === 'Escape') {
       removeErrorWarning();
     }
-  }
+  };
 
   document.addEventListener('keydown', onKeydown);
 
@@ -138,13 +138,13 @@ const getMessageSuccess = () => {
   const removeSuccesWarning = () => {
     document.removeEventListener('keydown', onKeydown);
     document.body.removeChild(success);
-  }
+  };
 
   const onKeydown = ({key}) => {
     if (key === 'Escape') {
       removeSuccesWarning();
     }
-  }
+  };
 
   document.addEventListener('keydown', onKeydown);
   success.addEventListener('click', removeSuccesWarning);
