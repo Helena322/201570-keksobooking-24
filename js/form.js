@@ -1,9 +1,10 @@
 import {SIMILAR_DATA_COUNT} from './constants.js';
 import {titleMinKey, titleMaxKey} from './messages.js';
-import {TITLE_LENGTH, PRICE_FOR_NIGHT, ROOM_FOR_GIESTS, TOKYO_COORDS, HOUSING_TYPES} from './model.js';
-import {mainPinMarker, map, showData, resetMap} from './map.js';
+import {TITLE_LENGTH, PRICE_FOR_NIGHT, ROOM_FOR_GIESTS, TOKYO_COORDS, HOUSING_TYPES, NOTIFICATION_TYPES} from './model.js';
+import {showData, resetMap} from './map.js';
 import {sendData, getData} from './request.js';
 import {clearAvatarImage} from './avatar.js';
+import {showNotification} from './notification.js';
 
 const form = document.querySelector('.ad-form');
 const formElements = form.querySelectorAll('fieldset');
@@ -20,8 +21,7 @@ const capacity = form.querySelector('#capacity');
 const options = capacity.querySelectorAll('option');
 const timein = form.querySelector('#timein');
 const timeout = form.querySelector('#timeout');
-const successMessage = document.querySelector('#success').content.querySelector('.success');
-const errorMessage = document.querySelector('#error').content.querySelector('.error');
+const reset = document.querySelector('.ad-form__reset');
 
 capacity.value = ROOM_FOR_GIESTS[1];
 price.placeholder = PRICE_FOR_NIGHT[type.value];
@@ -44,18 +44,17 @@ type.onchange = () => {
 
 room.onchange = () => {
   const values = Object.values(ROOM_FOR_GIESTS[room.value]);
-
   options.forEach((option) => {
     option.disabled = true;
   });
 
   options.forEach((option) => {
-    for (let i = 0; i < room.value; i++) {
-      if (Number(option.value) === values[i]) {
+    values.forEach((element) => {
+      if (element === Number(option.value)) {
         option.disabled = false;
         capacity.value = option.value;
       }
-    }
+    });
   });
 };
 
@@ -96,22 +95,11 @@ const enableForm = () => {
   mapFiltersFieldset.classList.remove('disabled');
 };
 
-const messageError = () => {
-  const error = errorMessage.cloneNode(true);
-  document.body.appendChild(error);
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') {
-      document.body.removeChild(error);
-    }
-  });
-  error.addEventListener('click', () => {
-    document.body.removeChild(error);
-  });
+const showError = () => {
+  showNotification(NOTIFICATION_TYPES.errorPost);
 };
 
-const messageSuccess = () => {
-  const success = successMessage.cloneNode(true);
-  document.body.appendChild(success);
+const showSuccess = () => {
   mapFilters.reset();
   form.reset();
   resetMap();
@@ -127,33 +115,36 @@ const messageSuccess = () => {
   price.placeholder = PRICE_FOR_NIGHT[type.value];
   price.min = PRICE_FOR_NIGHT[type.value];
   address.value = `${TOKYO_COORDS.LG}, ${TOKYO_COORDS.LN}`;
-  mainPinMarker.setLatLng({
-    lat: TOKYO_COORDS.LG,
-    lng: TOKYO_COORDS.LN,
-  });
-  map.setView({
-    lat: TOKYO_COORDS.LG,
-    lng: TOKYO_COORDS.LN,
-  }, 13);
 
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') {
-      document.body.removeChild(success);
-    }
-  });
-
-  success.addEventListener('click', () => {
-    document.body.removeChild(success);
-  });
+  showNotification(NOTIFICATION_TYPES.successPost);
 };
 
 form.addEventListener('submit', (evt) => {
   evt.preventDefault();
   sendData(
-    () => messageSuccess(),
-    () => messageError(),
+    showSuccess,
+    showError,
     new FormData(evt.target),
   );
+});
+
+reset.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  mapFilters.reset();
+  form.reset();
+  resetMap();
+  getData((data) => {
+    showData(data.slice(0, SIMILAR_DATA_COUNT));
+  });
+  clearAvatarImage();
+  title.value = '';
+  capacity.value = ROOM_FOR_GIESTS[1];
+  room.value = capacity.value;
+  type.value = HOUSING_TYPES.flat;
+  price.value = '';
+  price.placeholder = PRICE_FOR_NIGHT[type.value];
+  price.min = PRICE_FOR_NIGHT[type.value];
+  address.value = `${TOKYO_COORDS.LG}, ${TOKYO_COORDS.LN}`;
 });
 
 disableForm();

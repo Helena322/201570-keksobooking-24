@@ -1,19 +1,16 @@
 import {TOKYO_COORDS, MAIN_PIN_MARKER, MAIN_PIN_ICON} from './model.js';
 import {getOffer} from './card.js';
 import {enableForm, address} from './form.js';
-import {REFERENCE} from './constants.js';
-
-address.value = `${TOKYO_COORDS.LG}, ${TOKYO_COORDS.LN}`;
+import {REFERENCE, MAP_ZOOM} from './constants.js';
 
 const map = L.map('map-canvas')
   .on('load', () => {
-    enableForm();
+    address.value = `${TOKYO_COORDS.LG}, ${TOKYO_COORDS.LN}`;
   })
-
   .setView({
     lat: TOKYO_COORDS.LG,
     lng: TOKYO_COORDS.LN,
-  }, 13);
+  }, MAP_ZOOM);
 
 const layer = () => L.tileLayer(
   REFERENCE,
@@ -42,7 +39,7 @@ const mainPinMarker = L.marker(
 
 mainPinMarker.addTo(map);
 
-mainPinMarker.on('moveend', (evt) => {
+mainPinMarker.on('move', (evt) => {
   const coordinatesOfPlace = evt.target.getLatLng();
   address.value = `${coordinatesOfPlace.lat.toFixed(5)} ${coordinatesOfPlace.lng.toFixed(5)}`;
 });
@@ -74,12 +71,25 @@ const showData = ((data) => {
       .addTo(markerGroup)
       .bindPopup(() => getOffer(point));
   });
+  enableForm();
 });
 
-const resetMap = () => {
+const resetMarkersGroups = () => {
   markerGroup.clearLayers();
+};
+
+const resetMap = () => {
+  resetMarkersGroups();
+  mainPinMarker.setLatLng({
+    lat: TOKYO_COORDS.LG,
+    lng: TOKYO_COORDS.LN,
+  });
+  map.setView({
+    lat: TOKYO_COORDS.LG,
+    lng: TOKYO_COORDS.LN,
+  }, MAP_ZOOM);
 };
 
 layer();
 
-export {mainPinMarker, showData, resetMap, map};
+export {mainPinMarker, showData, resetMap, map, resetMarkersGroups};
