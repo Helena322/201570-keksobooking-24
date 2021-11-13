@@ -99,14 +99,21 @@ const enableForm = () => {
 const getMessageError = () => {
   const error = errorMessage.cloneNode(true);
   document.body.appendChild(error);
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') {
-      document.body.removeChild(error);
-    }
-  });
-  error.addEventListener('click', () => {
+
+  const removeErrorWarning = () => {
+    document.removeEventListener('keydown', onKeydown);
     document.body.removeChild(error);
-  });
+  }
+
+  const onKeydown = ({key}) => {
+    if (key === 'Escape') {
+      removeErrorWarning();
+    }
+  }
+
+  document.addEventListener('keydown', onKeydown);
+
+  error.addEventListener('click', removeErrorWarning);
 };
 
 const getMessageSuccess = () => {
@@ -128,15 +135,19 @@ const getMessageSuccess = () => {
   price.min = PRICE_FOR_NIGHT[type.value];
   address.value = `${TOKYO_COORDS.LG}, ${TOKYO_COORDS.LN}`;
 
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') {
-      document.body.removeChild(success);
-    }
-  });
-
-  success.addEventListener('click', () => {
+  const removeSuccesWarning = () => {
+    document.removeEventListener('keydown', onKeydown);
     document.body.removeChild(success);
-  });
+  }
+
+  const onKeydown = ({key}) => {
+    if (key === 'Escape') {
+      removeSuccesWarning();
+    }
+  }
+
+  document.addEventListener('keydown', onKeydown);
+  success.addEventListener('click', removeSuccesWarning);
 };
 
 form.addEventListener('submit', (evt) => {
