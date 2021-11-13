@@ -70,3 +70,11 @@ export const SHOW_STATES = Object.freeze({
 });
 
 export const FILE_TYPES = ['webp', 'jpg', 'jpeg', 'png'];
+
+export const NOTIFICATION_TYPES = Object.freeze({
+  errorGet: 'errorGet',
+  errorPost: 'errorPost',
+  successPost: 'successPost',
+});
+
+export const checkIsEscape = (key) => ['Escape', 'Esc'].includes(key);

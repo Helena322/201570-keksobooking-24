@@ -1,9 +1,10 @@
 import {SIMILAR_DATA_COUNT} from './constants.js';
 import {titleMinKey, titleMaxKey} from './messages.js';
-import {TITLE_LENGTH, PRICE_FOR_NIGHT, ROOM_FOR_GIESTS, TOKYO_COORDS, HOUSING_TYPES} from './model.js';
+import {TITLE_LENGTH, PRICE_FOR_NIGHT, ROOM_FOR_GIESTS, TOKYO_COORDS, HOUSING_TYPES, NOTIFICATION_TYPES} from './model.js';
 import {showData, resetMap} from './map.js';
 import {sendData, getData} from './request.js';
 import {clearAvatarImage} from './avatar.js';
+import {showNotification} from './notification.js';
 
 const form = document.querySelector('.ad-form');
 const formElements = form.querySelectorAll('fieldset');
@@ -20,8 +21,6 @@ const capacity = form.querySelector('#capacity');
 const options = capacity.querySelectorAll('option');
 const timein = form.querySelector('#timein');
 const timeout = form.querySelector('#timeout');
-const successMessage = document.querySelector('#success').content.querySelector('.success');
-const errorMessage = document.querySelector('#error').content.querySelector('.error');
 const reset = document.querySelector('.ad-form__reset');
 
 capacity.value = ROOM_FOR_GIESTS[1];
@@ -96,29 +95,11 @@ const enableForm = () => {
   mapFiltersFieldset.classList.remove('disabled');
 };
 
-const getMessageError = () => {
-  const error = errorMessage.cloneNode(true);
-  document.body.appendChild(error);
-
-  const removeErrorWarning = () => {
-    document.removeEventListener('keydown', onKeydown);
-    document.body.removeChild(error);
-  };
-
-  const onKeydown = ({key}) => {
-    if (key === 'Escape') {
-      removeErrorWarning();
-    }
-  };
-
-  document.addEventListener('keydown', onKeydown);
-
-  error.addEventListener('click', removeErrorWarning);
+const showError = () => {
+  showNotification(NOTIFICATION_TYPES.errorPost);
 };
 
-const getMessageSuccess = () => {
-  const success = successMessage.cloneNode(true);
-  document.body.appendChild(success);
+const showSuccess = () => {
   mapFilters.reset();
   form.reset();
   resetMap();
@@ -135,26 +116,14 @@ const getMessageSuccess = () => {
   price.min = PRICE_FOR_NIGHT[type.value];
   address.value = `${TOKYO_COORDS.LG}, ${TOKYO_COORDS.LN}`;
 
-  const removeSuccesWarning = () => {
-    document.removeEventListener('keydown', onKeydown);
-    document.body.removeChild(success);
-  };
-
-  const onKeydown = ({key}) => {
-    if (key === 'Escape') {
-      removeSuccesWarning();
-    }
-  };
-
-  document.addEventListener('keydown', onKeydown);
-  success.addEventListener('click', removeSuccesWarning);
+  showNotification(NOTIFICATION_TYPES.successPost);
 };
 
 form.addEventListener('submit', (evt) => {
   evt.preventDefault();
   sendData(
-    () => getMessageSuccess(),
-    () => getMessageError(),
+    showSuccess,
+    showError,
     new FormData(evt.target),
   );
 });

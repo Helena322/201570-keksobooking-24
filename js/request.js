@@ -1,6 +1,7 @@
 import {API, POST_METHOD} from './constants.js';
 import {formFailKey} from './messages.js';
-import {showAlert} from './utils.js';
+import {NOTIFICATION_TYPES} from './model.js';
+import { showNotification } from './notification.js';
 
 const getData = (onSuccess) => {
   fetch(`${API}/data`)
@@ -9,7 +10,7 @@ const getData = (onSuccess) => {
       onSuccess(data);
     })
     .catch(() => {
-      showAlert('Не удалось получить объявления');
+      showNotification(NOTIFICATION_TYPES.errorGet);
     });
 };
 
