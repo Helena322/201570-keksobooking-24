@@ -149,4 +149,4 @@ reset.addEventListener('click', (evt) => {
 
 disableForm();
 
-export {address, enableForm};
+export {address, disableForm, enableForm};
