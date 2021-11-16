@@ -10,6 +10,6 @@ map.whenReady(() => {
   enableForm();
   getData(
     (data) => initFilter((data.slice(0, SIMILAR_DATA_COUNT))),
-    () => showAlert('Ошибка на стороне сервера. Попробуйте позже'),
+    () => creatErrorGetMessage('Ошибка на стороне сервера. Попробуйте позже'),
   );
 });
