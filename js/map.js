@@ -1,7 +1,7 @@
-import { TOKYO_COORDS, MAIN_PIN_MARKER, MAIN_PIN_ICON } from "./model.js";
-import { getOffer } from "./card.js";
-import { enableForm, address } from "./form.js";
-import { REFERENCE, MAP_ZOOM, FIXED_СOORDINATES} from "./constants.js";
+import { TOKYO_COORDS, MAIN_PIN_MARKER, MAIN_PIN_ICON } from './model.js';
+import { getOffer } from './card.js';
+import { enableForm, address } from './form.js';
+import { REFERENCE, MAP_ZOOM, FIXED_СOORDINATES} from './constants.js';
 
 const appMap = {
   map: null,
@@ -10,9 +10,9 @@ const appMap = {
   markerGroup: null,
 };
 
-const onCreateMap = (callback) => {
-  appMap.map = L.map("map-canvas")
-    .on("load", () => {
+const createMap = (callback) => {
+  appMap.map = L.map('map-canvas')
+    .on('load', () => {
       address.value = `${TOKYO_COORDS.LG}, ${TOKYO_COORDS.LN}`;
       callback();
     })
@@ -21,7 +21,7 @@ const onCreateMap = (callback) => {
         lat: TOKYO_COORDS.LG,
         lng: TOKYO_COORDS.LN,
       },
-      MAP_ZOOM
+      MAP_ZOOM,
     );
 
   const layer = () =>
@@ -45,15 +45,15 @@ const onCreateMap = (callback) => {
     {
       draggable: true,
       icon: appMap.mainPinIcon,
-    }
+    },
   );
 
   appMap.mainPinMarker.addTo(appMap.map);
 
-  appMap.mainPinMarker.on("move", (evt) => {
+  appMap.mainPinMarker.on('move', (evt) => {
     const coordinatesOfPlace = evt.target.getLatLng();
     address.value = `${coordinatesOfPlace.lat.toFixed(
-      FIXED_СOORDINATES
+      FIXED_СOORDINATES,
     )} ${coordinatesOfPlace.lng.toFixed(FIXED_СOORDINATES)}`;
   });
 
@@ -79,7 +79,7 @@ const showData = (data) => {
       },
       {
         icon,
-      }
+      },
     );
 
     marker.addTo(appMap.markerGroup).bindPopup(() => getOffer(point));
@@ -102,8 +102,8 @@ const resetMap = () => {
       lat: TOKYO_COORDS.LG,
       lng: TOKYO_COORDS.LN,
     },
-    MAP_ZOOM
+    MAP_ZOOM,
   );
 };
 
-export { onCreateMap, showData, resetMap, resetMarkersGroups };
+export { createMap, showData, resetMap, resetMarkersGroups };

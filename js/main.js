@@ -1,5 +1,5 @@
 import {SIMILAR_DATA_COUNT} from './constants.js';
-import {onCreateMap, showData} from './map.js';
+import {createMap, showData} from './map.js';
 import {getData} from './request.js';
 import {initFilter} from './filter.js';
 
@@ -8,6 +8,6 @@ const getMapLoad = () => {
     initFilter(data);
     showData(data.slice(0, SIMILAR_DATA_COUNT));
   });
-}
+};
 
-onCreateMap(getMapLoad);
+createMap(getMapLoad);
