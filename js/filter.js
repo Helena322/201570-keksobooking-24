@@ -18,14 +18,14 @@ const features = mapFilters.querySelectorAll('[name="features"]');
 let offersData = [];
 
 const PRICE_CHOICE = {
-  [FILTER_TYPES.low]: () => (elementOfData) =>
+  [FILTER_TYPES.low]: (elementOfData) =>
     elementOfData.offer.price < PRICE.min,
 
-  [FILTER_TYPES.middle]: () => (elementOfData) =>
+  [FILTER_TYPES.middle]: (elementOfData) =>
     elementOfData.offer.price >= PRICE.min &&
     elementOfData.offer.price <= PRICE.middle,
 
-  [FILTER_TYPES.high]: () => (elementOfDada) =>
+  [FILTER_TYPES.high]: (elementOfDada) =>
     elementOfDada.offer.price > PRICE.middle || price.value === DEFAULT_ANY,
 
   [DEFAULT_ANY]: () => true,

@@ -1,54 +1,69 @@
-import {TOKYO_COORDS, MAIN_PIN_MARKER, MAIN_PIN_ICON} from './model.js';
-import {getOffer} from './card.js';
-import {enableForm, address} from './form.js';
-import {REFERENCE, MAP_ZOOM} from './constants.js';
+import { TOKYO_COORDS, MAIN_PIN_MARKER, MAIN_PIN_ICON } from "./model.js";
+import { getOffer } from "./card.js";
+import { enableForm, address } from "./form.js";
+import { REFERENCE, MAP_ZOOM, FIXED_СOORDINATES} from "./constants.js";
 
-const map = L.map('map-canvas')
-  .on('load', () => {
-    address.value = `${TOKYO_COORDS.LG}, ${TOKYO_COORDS.LN}`;
-  })
-  .setView({
-    lat: TOKYO_COORDS.LG,
-    lng: TOKYO_COORDS.LN,
-  }, MAP_ZOOM);
+const appMap = {
+  map: null,
+  mainPinIcon: null,
+  mainPinMarker: null,
+  markerGroup: null,
+};
 
-const layer = () => L.tileLayer(
-  REFERENCE,
-  {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  },
-).addTo(map);
+const onCreateMap = (callback) => {
+  appMap.map = L.map("map-canvas")
+    .on("load", () => {
+      address.value = `${TOKYO_COORDS.LG}, ${TOKYO_COORDS.LN}`;
+      callback();
+    })
+    .setView(
+      {
+        lat: TOKYO_COORDS.LG,
+        lng: TOKYO_COORDS.LN,
+      },
+      MAP_ZOOM
+    );
 
-const mainPinIcon = L.icon({
-  iconUrl: MAIN_PIN_MARKER.URL,
-  iconSize: [MAIN_PIN_MARKER.WIDTH, MAIN_PIN_MARKER.HEIGHT],
-  iconAnchor: [MAIN_PIN_MARKER.MIDDLE, MAIN_PIN_MARKER.HEIGHT],
-});
+  const layer = () =>
+    L.tileLayer(REFERENCE, {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(appMap.map);
 
-const mainPinMarker = L.marker(
-  {
-    lat: TOKYO_COORDS.LG,
-    lng: TOKYO_COORDS.LN,
-  },
+  appMap.mainPinIcon = L.icon({
+    iconUrl: MAIN_PIN_MARKER.URL,
+    iconSize: [MAIN_PIN_MARKER.WIDTH, MAIN_PIN_MARKER.HEIGHT],
+    iconAnchor: [MAIN_PIN_MARKER.MIDDLE, MAIN_PIN_MARKER.HEIGHT],
+  });
 
-  {
-    draggable: true,
-    icon: mainPinIcon,
-  },
-);
+  appMap.mainPinMarker = L.marker(
+    {
+      lat: TOKYO_COORDS.LG,
+      lng: TOKYO_COORDS.LN,
+    },
 
-mainPinMarker.addTo(map);
+    {
+      draggable: true,
+      icon: appMap.mainPinIcon,
+    }
+  );
 
-mainPinMarker.on('move', (evt) => {
-  const coordinatesOfPlace = evt.target.getLatLng();
-  address.value = `${coordinatesOfPlace.lat.toFixed(5)} ${coordinatesOfPlace.lng.toFixed(5)}`;
-});
+  appMap.mainPinMarker.addTo(appMap.map);
 
-const markerGroup = L.layerGroup().addTo(map);
+  appMap.mainPinMarker.on("move", (evt) => {
+    const coordinatesOfPlace = evt.target.getLatLng();
+    address.value = `${coordinatesOfPlace.lat.toFixed(
+      FIXED_СOORDINATES
+    )} ${coordinatesOfPlace.lng.toFixed(FIXED_СOORDINATES)}`;
+  });
 
-const showData = ((data) => {
+  appMap.markerGroup = L.layerGroup().addTo(appMap.map);
+
+  layer();
+};
+
+const showData = (data) => {
   data.forEach((point) => {
-
     const lat = point.location.lat;
     const lng = point.location.lng;
 
@@ -64,32 +79,31 @@ const showData = ((data) => {
       },
       {
         icon,
-      },
+      }
     );
 
-    marker
-      .addTo(markerGroup)
-      .bindPopup(() => getOffer(point));
+    marker.addTo(appMap.markerGroup).bindPopup(() => getOffer(point));
   });
   enableForm();
-});
+};
 
 const resetMarkersGroups = () => {
-  markerGroup.clearLayers();
+  appMap.markerGroup.clearLayers();
 };
 
 const resetMap = () => {
   resetMarkersGroups();
-  mainPinMarker.setLatLng({
+  appMap.mainPinMarker.setLatLng({
     lat: TOKYO_COORDS.LG,
     lng: TOKYO_COORDS.LN,
   });
-  map.setView({
-    lat: TOKYO_COORDS.LG,
-    lng: TOKYO_COORDS.LN,
-  }, MAP_ZOOM);
+  appMap.map.setView(
+    {
+      lat: TOKYO_COORDS.LG,
+      lng: TOKYO_COORDS.LN,
+    },
+    MAP_ZOOM
+  );
 };
 
-layer();
-
-export {mainPinMarker, showData, resetMap, map, resetMarkersGroups};
+export { onCreateMap, showData, resetMap, resetMarkersGroups };
