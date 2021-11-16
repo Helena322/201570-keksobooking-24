@@ -8,3 +8,4 @@ export const MAP_ZOOM = '13';
 export const AVATAR_SRC = 'img/muffin-grey.svg';
 export const REFERENCE = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 export const API = 'https://24.javascript.pages.academy/keksobooking';
+export const FIXED_СOORDINATES = 5;

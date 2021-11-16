@@ -56,4 +56,4 @@ const showNotification = (type) => {
   document.addEventListener('keydown', onKeydown);
 };
 
-export {showNotification};
+export {showNotification, creatErrorGetMessage};
