@@ -1,12 +1,12 @@
 export const MAIN_PIN_ICON = Object.freeze({
-  URL: '../img/pin.svg',
+  URL: 'img/pin.svg',
   WIDTH: 40,
   HEIGHT: 40,
   MIDDLE: 20,
 });
 
 export const MAIN_PIN_MARKER = Object.freeze({
-  URL: '../img/main-pin.svg',
+  URL: 'img/main-pin.svg',
   WIDTH: 52,
   HEIGHT: 52,
   MIDDLE: 26,
